@@ -1,20 +1,29 @@
 require("dotenv").config();
-
+const mongoose = require("mongoose");
 const express = require("express");
+
 const cors = require("cors");
-// const cors = require("./routes/taskRoute");
+const taskRouter = require("./routes/taskRouter");
 
 const app = express();
+
 app.use((req, res, next) => {
   console.log("User service: " + req.path, req.method);
   next();
 });
 
-app.get("/api/task", (req, res) => {
-  res.send("Api task works");
-});
-// app.use("/api/task/", taskRoute);
+// routes
+app.use("/api/task", taskRouter);
 
-app.listen(process.env.PORT, () => {
-  console.log(`Task service listening on port ${process.env.PORT}`);
-});
+mongoose
+  .connect(process.env.MONG_URL)
+  .then(() => {
+    app.listen(process.env.PORT, () => {
+      console.log(
+        `Task service connected to DB and listening on port ${process.env.PORT}`
+      );
+    });
+  })
+  .catch((error) => {
+    console.log(error);
+  });
