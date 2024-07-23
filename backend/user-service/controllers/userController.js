@@ -1,3 +1,4 @@
+require("dotenv").config();
 const User = require("../models/userModel");
 const mongoose = require("mongoose");
 // login user
@@ -26,7 +27,10 @@ const registerUser = (req, res) => {
 // update user
 const updateUser = async (req, res) => {
   const { id } = req.params;
-
+  console.log(id);
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    res.status(404).json({ error: "No such workout" });
+  }
   const user = await User.findOneAndUpdate({ _id: id }, { ...req.body });
   if (!user) {
     res.status(400).json({ error: "No such User" });
@@ -36,7 +40,7 @@ const updateUser = async (req, res) => {
 
 // test service user
 
-const test = (req, res) => {
+const testUser = (req, res) => {
   res.send("User service works");
 };
 // EXPORT methods
@@ -44,4 +48,5 @@ module.exports = {
   loginUser,
   registerUser,
   updateUser,
+  testUser,
 };
