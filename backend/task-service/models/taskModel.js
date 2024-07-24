@@ -63,14 +63,11 @@ const taskSchema = new Schema({
     required: false,
   },
 
-  // ids of subtasks
-  //   relatedId: [
-  //     {
-  //       type: mongoose.Schema.Types.ObjectId,
-  //       ref: "Task", // The name of the model being referenced
-  //     },
-
-  //   ],
+  // id of task (if it is a subTask)
+  relatedTaskId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Task", // The name of the model being referenced
+  },
 });
 
 module.exports = mongoose.model("Task", taskSchema);

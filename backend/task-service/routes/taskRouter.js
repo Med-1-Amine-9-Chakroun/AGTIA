@@ -7,20 +7,44 @@ const router = express.Router();
 // Task
 //*********************************** */
 
-// get all tasks
+// get all tasks   **
 router.get("/allTasks/:idUser", getTasks);
 
-// create task
-router.get("/createTask", createTask);
+// get task
+router.get("/getTask/:idUser/:idTask", getTasks);
+
+// get task by type
+router.get("/getTasksByType/:idUser", getTasks);
+
+// get task by categorie
+router.get("/getTasksByCategorie/:idUser", getTasks);
+
+// get task by status
+router.get("/getTasksByStatus/:idUser", getTasks);
+
+// create task  **
+router.post("/createTask", createTask);
+
+// update task
+router.put("/updateTask/:idUser/:idTask", createTask);
+
+// delete task
+router.delete("/deleteTask/:idUser/:idTask", createTask);
 
 //*********************************** */
 // SubTask
 //*********************************** */
 
-// get all tasks
-router.get("/SubTasks/:idUser/:idTask", getTasks);
+// get all subTasks
+router.get("/getSubTasks/:idUser/:idTask", getTasks);
 
-// create task
-router.get("/createSubTas/:idUser/:idTask", createTask);
+// create subTask
+router.post("/createSubTask/:idTask", createTask);
+
+// update subTask
+router.put("/updateSubTask/:idSubTask", createTask);
+
+// delete subTask
+router.delete("/deleteSubTask/:idSubTask", createTask);
 
 module.exports = router;
