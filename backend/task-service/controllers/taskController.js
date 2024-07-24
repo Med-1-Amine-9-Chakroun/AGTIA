@@ -73,7 +73,7 @@ const getTasksByTypeController = (req, res) => {
 };
 
 // get tasks by categorie
-const getTasksByCategorieController = async (req, res) => {
+const getTasksByCategorieController = (req, res) => {
   // categorie extraction
   const { categorie } = req.body;
   // user id extraction
@@ -85,9 +85,12 @@ const getTasksByCategorieController = async (req, res) => {
 
   try {
     // extracting tasks using user id and categorie
-    // Utilisation du service pour récupérer les tâches
-    const tasks = await getTasksByCategorie(userId, categorie);
+    const tasks = Task.find({ userId: userId, categorie: categorie });
 
+    // while not found
+    if (!tasks) {
+      res.status(400).json({ error: "No tasks found" });
+    }
     // while success
     res.status(200).json({ tasks });
   } catch (error) {
