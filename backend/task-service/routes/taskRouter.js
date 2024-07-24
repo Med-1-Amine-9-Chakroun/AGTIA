@@ -1,4 +1,5 @@
 const express = require("express");
+
 const {
   getTasksController,
   getTaskByIdController,
@@ -8,8 +9,16 @@ const {
   createTaskController,
   editTaskController,
   deleteTaskController,
+  testTask,
 } = require("../controllers/taskController");
 
+const {
+  getAllSubTasksController,
+  createSubTaskController,
+  editSubTaskController,
+  deleteSubTaskController,
+  testSubTask,
+} = require("../controllers/subTaskController");
 const router = express.Router();
 
 //*********************************** *///*********************************** *///*********************************** */
@@ -17,7 +26,7 @@ const router = express.Router();
 //*********************************** *///*********************************** *///*********************************** */
 
 // get all tasks   **
-router.get("/allTasks/:idUser", getTasksController);
+router.get("/allTasks/:userId", getTasksController);
 
 // get task
 router.get("/getTask/:idTask", getTaskByIdController);
@@ -32,7 +41,7 @@ router.get("/getTasksByCategorie/:idUser", getTasksByCategorieController);
 router.get("/getTasksByStatus/:idUser", getTasksByStatusController);
 
 // create task  **
-router.post("/createTask/:idUser", createTaskController);
+router.post("/createTask/:userId", createTaskController);
 
 // update task
 router.put("/updateTask/:idTask", editTaskController);
@@ -40,20 +49,26 @@ router.put("/updateTask/:idTask", editTaskController);
 // delete task
 router.delete("/deleteTask/:idTask", deleteTaskController);
 
+// test task
+router.get("/test", testTask);
+
 //*********************************** *///*********************************** *///*********************************** */
 // SubTask
 //*********************************** *///*********************************** *///*********************************** */
 
 // get all subTasks
-router.get("/getSubTasks/:idUser/:idTask", getTasks);
+router.get("/getSubTasks/:idTask", getAllSubTasksController);
 
 // create subTask
-router.post("/createSubTask/:idTask", createTask);
+router.post("/createSubTask/:idTask", createSubTaskController);
 
 // update subTask
-router.put("/updateSubTask/:idSubTask", createTask);
+router.put("/updateSubTask/:idSubTask", editSubTaskController);
 
 // delete subTask
-router.delete("/deleteSubTask/:idSubTask", createTask);
+router.delete("/deleteSubTask/:idSubTask", deleteSubTaskController);
+
+// test subTask
+router.get("/subTaskTest", testSubTask);
 
 module.exports = router;

@@ -7,7 +7,6 @@ const taskSchema = new Schema({
   titreTask: {
     type: String,
     required: true,
-    unique: true,
   },
 
   // To do, doing, done, ...

@@ -2,7 +2,7 @@ const { default: mongoose } = require("mongoose");
 const Task = require("../models/taskModel");
 
 // get all tasks
-const getTasksController = (req, res) => {
+const getTasksController = async (req, res) => {
   // user id extraction
   const { userId } = req.params;
   // user id verification
@@ -11,7 +11,7 @@ const getTasksController = (req, res) => {
   }
   // extracting alll tasks
   try {
-    const tasks = Task.find({ categorie: "Task", userId: userId });
+    const tasks = await Task.find({ categorie: "task", userId: userId });
     // while not found
     if (!tasks) {
       res.status(400).json({ error: "No Tasks Found" });
@@ -19,22 +19,22 @@ const getTasksController = (req, res) => {
     // while success
     res.status(200).json({ tasks });
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ error: error.message + "userId" });
   }
 };
 
 // get task by ID
-const getTaskByIdController = (req, res) => {
+const getTaskByIdController = async (req, res) => {
   // id task extraction
-  const { taskId } = req.params;
+  const { idTask } = req.params;
   // id task verification
-  if (!mongoose.Types.ObjectId.isValid(taskId)) {
+  if (!mongoose.Types.ObjectId.isValid(idTask)) {
     res.status(404).json({ error: "Task not found" });
   }
 
   // extracting task
   try {
-    const task = Task.findOne({ _id: taskId });
+    const task = await Task.findOne({ _id: idTask });
     // while not found
     if (!task) {
       res.status(400).json({ error: "Task not found" });
@@ -126,7 +126,7 @@ const getTasksByStatusController = (req, res) => {
 const createTaskController = async (req, res) => {
   // id user
   const { userId } = req.params;
-  console.log(userId);
+
   // id user verification
   if (!mongoose.Types.ObjectId.isValid(userId)) {
     res.status(404).json({ error: "No such task" });
@@ -146,7 +146,6 @@ const createTaskController = async (req, res) => {
     endTime,
     priority,
   } = req.body;
-
   // title verification
   if (!titreTask) {
     return res.status(400).json({ error: "Title is required" });
@@ -182,20 +181,24 @@ const createTaskController = async (req, res) => {
 // edit task
 const editTaskController = async (req, res) => {
   // id task extraction
-  const { taskId } = req.params;
-  console.log(taskId);
+  const { idTask } = req.params;
+  console.log(req.body.titreTask);
   // idTask verification
-  if (!mongoose.Types.ObjectId.isValid(taskId)) {
+  if (!mongoose.Types.ObjectId.isValid(idTask)) {
     res.status(404).json({ error: "No such task" });
   }
 
+  // checking the title of the task
+  if (!req.body.titreTask) {
+    res.status(400).json({ error: "Title is required" });
+  }
   // editing
   try {
-    const task = await Task.findOneAndUpdate({ _id: taskId }, { ...req.body });
+    const task = await Task.findOneAndUpdate({ _id: idTask }, { ...req.body });
 
     // while error
     if (!task) {
-      res.status(400).json({ error: "Error while updating task" });
+      res.status(400).json({ error: "Error occured while updating" });
     }
     // while success
     res.status(200).json({ task });
@@ -207,18 +210,18 @@ const editTaskController = async (req, res) => {
 // delete task
 const deleteTaskController = async (req, res) => {
   // task id extraction
-  const { taskId } = req.params;
+  const { idTask } = req.params;
   // task id verification
-  if (!mongoose.Types.ObjectId.isValid(taskId)) {
-    res.status(404).json({ error: "Error while deleting " });
+  if (!mongoose.Types.ObjectId.isValid(idTask)) {
+    res.status(404).json({ error: "Error while occured deleting " });
   }
 
   // deleting task
   try {
-    const task = await Task.findOneAndDelete({ _id: taskId });
+    const task = await Task.findOneAndDelete({ _id: idTask });
     // while error
     if (!task) {
-      res.status(400).json({ error: "Error while deleting" });
+      res.status(400).json({ error: "Error while occured deleting" });
     }
 
     // while success
@@ -226,6 +229,11 @@ const deleteTaskController = async (req, res) => {
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
+};
+
+// test task controller
+const testTask = (req, res) => {
+  res.send("Task controller works");
 };
 
 module.exports = {
@@ -237,4 +245,5 @@ module.exports = {
   createTaskController,
   editTaskController,
   deleteTaskController,
+  testTask,
 };
