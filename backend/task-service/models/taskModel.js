@@ -11,9 +11,9 @@ const taskSchema = new Schema({
   },
 
   // To do, doing, done, ...
-  StatusTask: {
+  statusTask: {
     type: String,
-    required: true,
+    required: false,
   },
 
   // task, subtask, ...
@@ -52,7 +52,7 @@ const taskSchema = new Schema({
   },
 
   // heure fin
-  endDate: {
+  endTime: {
     type: Date,
     required: false,
   },
@@ -63,10 +63,15 @@ const taskSchema = new Schema({
     required: false,
   },
 
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "users", // The name of the model being referenced
+  },
+
   // id of task (if it is a subTask)
   relatedTaskId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Task", // The name of the model being referenced
+    ref: "tasks", // The name of the model being referenced
   },
 });
 
