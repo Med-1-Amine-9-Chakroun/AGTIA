@@ -1,16 +1,31 @@
 require("dotenv").config();
-
+const mongoose = require("mongoose");
 const express = require("express");
+
 const cors = require("cors");
-// const cors = require("./routes/taskRoute");
+const taskRouter = require("./routes/taskRouter");
 
 const app = express();
+// Middleware to parse JSON bodies
+app.use(express.json());
 
-app.get("/api/task", (req, res) => {
-  res.send("Api task works");
+app.use((req, res, next) => {
+  console.log("User service: " + req.path, req.method);
+  next();
 });
-// app.use("/api/task/", taskRoute);
 
-app.listen(process.env.PORT, () => {
-  console.log(`Listenning on port ${process.env.PORT}`);
-});
+// routes
+app.use("/api/task", taskRouter);
+
+mongoose
+  .connect(process.env.MONG_URL)
+  .then(() => {
+    app.listen(process.env.PORT, () => {
+      console.log(
+        `Task service connected to DB and listening on port ${process.env.PORT}`
+      );
+    });
+  })
+  .catch((error) => {
+    console.log(error);
+  });

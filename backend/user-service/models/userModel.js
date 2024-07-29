@@ -43,7 +43,7 @@ userSchema.statics.login = async function (email, password) {
   if (!match) {
     throw Error("Incorrect password");
   }
-  console.log(user);
+
   return user;
 };
 
@@ -71,7 +71,7 @@ userSchema.statics.register = async function (
   }
   const exists = await this.findOne({ email });
   if (exists) {
-    throw Error("Incorrect already in use");
+    throw Error("Email already in use");
   }
 
   if (!validator.isStrongPassword(password)) {
