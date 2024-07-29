@@ -26,12 +26,14 @@ const getAllSubTasksController = async (req, res) => {
 
 // create subTask
 const createSubTaskController = async (req, res) => {
+  console.log("hello1");
   // extracting task id
-  const { idTask } = req.params;
+  const { relatedTaskId } = req.params;
   // task id verification
-  if (!mongoose.Types.ObjectId.isValid(idTask)) {
+  if (!mongoose.Types.ObjectId.isValid(relatedTaskId)) {
     res.status(404).json({ error: "No subTasks found" });
   }
+  console.log("hello2");
   // initial categorie
   const categorie = "subTask";
   // initial status
@@ -49,7 +51,7 @@ const createSubTaskController = async (req, res) => {
       titreTask,
       statusTask,
       categorie,
-      relatedTaskId: idTask,
+      relatedTaskId: relatedTaskId,
     });
     res.status(200).json({ subtask });
   } catch (error) {
@@ -78,7 +80,7 @@ const editSubTaskController = async (req, res) => {
       res.status(400).json({ error: "Error occured while updating" });
     }
     // while success
-    res.satus(200).json({ subTask });
+    res.status(200).json({ subTask });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

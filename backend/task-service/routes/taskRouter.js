@@ -19,6 +19,7 @@ const {
   deleteSubTaskController,
   testSubTask,
 } = require("../controllers/subTaskController");
+
 const router = express.Router();
 
 //*********************************** *///*********************************** *///*********************************** */
@@ -32,13 +33,13 @@ router.get("/allTasks/:userId", getTasksController);
 router.get("/getTask/:idTask", getTaskByIdController);
 
 // get task by type
-router.get("/getTasksByType/:idUser", getTasksByTypeController);
+router.get("/getTasksByType/:userId", getTasksByTypeController);
 
 // get task by categorie
-router.get("/getTasksByCategorie/:idUser", getTasksByCategorieController);
+router.get("/getTasksByCategorie/:userId", getTasksByCategorieController);
 
 // get task by status
-router.get("/getTasksByStatus/:idUser", getTasksByStatusController);
+router.get("/getTasksByStatus/:userId", getTasksByStatusController);
 
 // create task  **
 router.post("/createTask/:userId", createTaskController);
@@ -60,7 +61,7 @@ router.get("/test", testTask);
 router.get("/getSubTasks/:idTask", getAllSubTasksController);
 
 // create subTask
-router.post("/createSubTask/:idTask", createSubTaskController);
+router.post("/createSubTask/:relatedTaskId", createSubTaskController);
 
 // update subTask
 router.put("/updateSubTask/:idSubTask", editSubTaskController);

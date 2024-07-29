@@ -47,7 +47,7 @@ const getTaskByIdController = async (req, res) => {
 };
 
 // get tasks by type
-const getTasksByTypeController = (req, res) => {
+const getTasksByTypeController = async (req, res) => {
   // extracting type
   const { type } = req.body;
   // extracting user id
@@ -59,8 +59,8 @@ const getTasksByTypeController = (req, res) => {
 
   try {
     // extracting tasks using user id and type
-    const tasks = Task.find({ userId: userId, type: type });
-
+    const tasks = await Task.find({ userId: userId, type: type });
+    console.log(tasks);
     // while not found
     if (!tasks) {
       res.status(400).json({ error: "No tasks found" });
@@ -68,12 +68,12 @@ const getTasksByTypeController = (req, res) => {
     // while success
     res.status(200).json({ tasks });
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ error: error.message + "ezzzzzzzzzzzz" });
   }
 };
 
 // get tasks by categorie
-const getTasksByCategorieController = (req, res) => {
+const getTasksByCategorieController = async (req, res) => {
   // categorie extraction
   const { categorie } = req.body;
   // user id extraction
@@ -85,7 +85,7 @@ const getTasksByCategorieController = (req, res) => {
 
   try {
     // extracting tasks using user id and categorie
-    const tasks = Task.find({ userId: userId, categorie: categorie });
+    const tasks = await Task.find({ userId: userId, categorie: categorie });
 
     // while not found
     if (!tasks) {
@@ -99,9 +99,9 @@ const getTasksByCategorieController = (req, res) => {
 };
 
 // get tasks by status
-const getTasksByStatusController = (req, res) => {
+const getTasksByStatusController = async (req, res) => {
   // extracting status
-  const { status } = req.body;
+  const { statusTask } = req.body;
   // extracting user id
   const { userId } = req.params;
   if (!mongoose.Types.ObjectId.isValid(userId)) {
@@ -110,7 +110,7 @@ const getTasksByStatusController = (req, res) => {
 
   try {
     // extracting tasks using user id and status
-    const tasks = Task.find({ userId: userId, status: status });
+    const tasks = await Task.find({ userId: userId, statusTask: statusTask });
     // while not found
     if (!tasks) {
       res.status(400).json({ error: "No tasks found" });
@@ -233,6 +233,7 @@ const deleteTaskController = async (req, res) => {
 
 // test task controller
 const testTask = (req, res) => {
+  console.log("aeztaet");
   res.send("Task controller works");
 };
 
