@@ -1,24 +1,34 @@
 require("dotenv").config();
 const User = require("../models/userModel");
 const mongoose = require("mongoose");
+const jwt = require("jsonwebtoken");
+
+const createToken = (_id) => {
+  return jwt.sign({ _id: _id }, process.env.SECRET, { expiresIn: "3d" });
+};
+
 // login user
-const loginUser = (req, res) => {
+const loginUser = async (req, res) => {
   const { email, password } = req.body;
   try {
-    const user = User.login(email, password);
+    const user = await User.login(email, password);
 
-    res.status(200).json({ user });
+    // create a token
+    const token = createToken(user._id);
+
+    res.status(200).json({ user, token });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
 
 // register user
-const registerUser = (req, res) => {
+const registerUser = async (req, res) => {
   const { email, password, nomUser, prenomUser } = req.body;
   try {
-    const user = User.register(email, password, nomUser, prenomUser);
-    res.status(200).json({ user });
+    const user = await User.register(email, password, nomUser, prenomUser);
+    const token = createToken(user._id);
+    res.status(200).json({ user, token });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

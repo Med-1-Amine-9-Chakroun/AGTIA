@@ -18,7 +18,7 @@ const app = express();
 // app.use(express.json());
 
 app.use((req, res, next) => {
-  console.log("API GateWay: " + req.path, req.method);
+  console.log("API GateWay: " + req.path, req.headers);
   // authentification
 
   next();
