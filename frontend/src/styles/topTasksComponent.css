@@ -1,0 +1,47 @@
+/* top devision */
+.top-tasks-container .top {
+  padding: 20px 50px;
+}
+
+/* title : All Tasks */
+.top-tasks-container .top h1 {
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+/* horizental line */
+.top-tasks-container .top hr {
+  border: 1px solid #cacaca7b;
+}
+
+/* the bottom of the top devivision that contains date and add btn */
+.top-tasks-container .top .top-bottom-content {
+  padding-top: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+/* date division */
+.top-tasks-container .top .date {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+/* button style */
+.top-tasks-container .top button {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #1c2434;
+  color: aliceblue;
+  font-size: 16px;
+  padding: 10px 15px 10px 13px;
+  border: none;
+  border-radius: 50px;
+}
+
+.top-tasks-container .top button span {
+  margin-right: 5px;
+}

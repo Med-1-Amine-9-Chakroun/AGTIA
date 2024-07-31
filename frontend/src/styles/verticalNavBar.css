@@ -7,6 +7,7 @@
 
 .vertical-navbar-container {
   width: 290px;
+  max-width: 290px;
   display: flex;
   flex-direction: column;
   padding: 0 20px 0 20px;
