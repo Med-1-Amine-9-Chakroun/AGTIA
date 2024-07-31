@@ -26,6 +26,7 @@ header .container {
   font-weight: 700;
   font-style: normal;
   color: white;
+  user-select: none;
 }
 
 .container nav {
