@@ -1,0 +1,130 @@
+/* layout */
+:root {
+  --primary: #1c2434;
+  --secondary: #c0aeae;
+  --error: #e7195a;
+}
+
+/* Login container */
+.login-container {
+  margin-top: 20px;
+  width: 100%;
+  height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Login card */
+.login-container .login-card {
+  width: 80%;
+  max-width: 1000px;
+  height: 70%;
+  background-color: #f9f9f9;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 5px;
+  box-shadow: 2.5px 2.5px 5px 5px rgba(0, 0, 0, 0.05);
+}
+
+/*******************************************************************************************************************/
+/* Left side of login card */
+.login-container .login-card .login-card-left {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 5px;
+}
+
+/* Title */
+.login-container .login-card .login-card-left h1 {
+  font-weight: 400;
+  font-size: 50px;
+  margin: 20px 0;
+}
+
+/* inputs container */
+.login-container .login-card .login-card-left .inputs {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 40px;
+}
+
+/* inputs styles */
+.login-container .login-card .login-card-left .inputs > * {
+  width: 80%;
+  height: 50px;
+  padding: 0 0 0 15px;
+  margin-top: 25px;
+  box-sizing: border-box;
+  border: 1px solid var(--secondary);
+  background-color: transparent;
+  font-size: 18px;
+  border-radius: 50px;
+}
+
+/* inputs placeholder */
+.login-container .login-card .login-card-left .inputs > *::placeholder {
+  color: #c0aeae;
+  font-weight: 300;
+}
+
+/* login button */
+.login-container .login-card .login-card-left .loginBtn {
+  background-color: var(--primary);
+  color: #e6e3e3;
+  width: 40%;
+  height: 40px;
+  margin-top: 50px;
+  border-radius: 60px;
+  font-size: 20px;
+  font-weight: 300;
+  cursor: pointer;
+}
+
+/* User Name input */
+.login-container .login-card .login-card-left .forgotpswd {
+  margin-top: 50px;
+}
+
+/*******************************************************************************************************************/
+/* Right side of login card */
+.login-container .login-card .login-card-right {
+  border-radius: 5px;
+  width: 50%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
+}
+
+/* right side paragraph */
+.login-container .login-card .login-card-right p {
+  margin-top: 50%;
+  width: 80%;
+  text-align: center;
+}
+
+/* right side button */
+.login-container .login-card .login-card-right button {
+  border: 1px solid --primary;
+  font-size: 16px;
+  border-radius: 50px;
+  padding: 2px 30px;
+  margin-top: 20px;
+  cursor: pointer;
+}
+
+/* Vertical line between left and right login card containers*/
+.login-container .login-card .vertical-line {
+  border: 1px solid #e6e3e3;
+  height: 85%;
+}
