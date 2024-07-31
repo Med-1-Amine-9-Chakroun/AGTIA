@@ -5,8 +5,8 @@
   --error: #e7195a;
 }
 
-/* Login container */
-.login-container {
+/* signin container */
+.signin-container {
   margin-top: 20px;
   width: 100%;
   height: 90vh;
@@ -15,8 +15,8 @@
   align-items: center;
 }
 
-/* Login card */
-.login-container .login-card {
+/* signin card */
+.signin-container .signin-card {
   width: 80%;
   max-width: 1000px;
   height: 70%;
@@ -30,8 +30,8 @@
 }
 
 /*******************************************************************************************************************/
-/* Left side of login card */
-.login-container .login-card .login-card-left {
+/* Left side of signin card */
+.signin-container .signin-card .signin-card-left {
   width: 50%;
   height: 100%;
   display: flex;
@@ -41,28 +41,28 @@
 }
 
 /* Title */
-.login-container .login-card .login-card-left h1 {
+.signin-container .signin-card .signin-card-left h1 {
   font-weight: 400;
-  font-size: 50px;
+  font-size: 40px;
   margin: 20px 0;
 }
 
 /* inputs container */
-.login-container .login-card .login-card-left .inputs {
+.signin-container .signin-card .signin-card-left .inputs {
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 40px;
+  margin-top: 30px;
 }
 
 /* inputs styles */
-.login-container .login-card .login-card-left .inputs > * {
+.signin-container .signin-card .signin-card-left .inputs > * {
   width: 80%;
-  height: 50px;
+  height: 40px;
   padding: 0 0 0 15px;
-  margin-top: 25px;
+  margin-top: 20px;
   box-sizing: border-box;
   border: 1px solid var(--primary);
   background-color: transparent;
@@ -71,16 +71,16 @@
 }
 
 /* inputs placeholder */
-.login-container .login-card .login-card-left .inputs > *::placeholder {
+.signin-container .signin-card .signin-card-left .inputs > *::placeholder {
   color: #c0aeae;
   font-weight: 300;
 }
 
-/* login button */
-.login-container .login-card .login-card-left .loginBtn {
+/* signin button */
+.signin-container .signin-card .signin-card-left .signinBtn {
   background-color: var(--primary);
   color: #e6e3e3;
-  width: 40%;
+  width: 60%;
   height: 40px;
   margin-top: 50px;
   border-radius: 60px;
@@ -89,14 +89,9 @@
   cursor: pointer;
 }
 
-/* User Name input */
-.login-container .login-card .login-card-left .forgotpswd {
-  margin-top: 50px;
-}
-
 /*******************************************************************************************************************/
-/* Right side of login card */
-.login-container .login-card .login-card-right {
+/* Right side of signin card */
+.signin-container .signin-card .signin-card-right {
   border-radius: 5px;
   width: 50%;
   height: 100%;
@@ -106,25 +101,18 @@
   align-items: center;
 }
 
-/* right side paragraph */
-.login-container .login-card .login-card-right p {
-  margin-top: 50%;
-  width: 80%;
-  text-align: center;
-}
-
 /* right side button */
-.login-container .login-card .login-card-right button {
+.signin-container .signin-card .signin-card-right button {
   border: 1px solid --primary;
+  margin-top: 60%;
   font-size: 16px;
   border-radius: 50px;
   padding: 2px 30px;
-  margin-top: 20px;
   cursor: pointer;
 }
 
-/* Vertical line between left and right login card containers*/
-.login-container .login-card .vertical-line {
+/* Vertical line between left and right signin card containers*/
+.signin-container .signin-card .vertical-line {
   border: 1px solid #e6e3e3;
   height: 85%;
 }

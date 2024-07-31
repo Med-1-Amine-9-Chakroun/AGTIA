@@ -1,13 +1,14 @@
 import "./App.css";
 import NavBar from "./components/NavBar";
 import Login from "./components/Login";
+import SignIn from "./components/SignIn";
 
 function App() {
   return (
     <div className="App">
       <NavBar />
-
-      <Login />
+      <SignIn />
+      {/* <Login /> */}
     </div>
   );
 }
