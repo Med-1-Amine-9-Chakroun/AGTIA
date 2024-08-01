@@ -45,6 +45,7 @@
   font-weight: 400;
   font-size: 50px;
   margin: 20px 0;
+  user-select: none;
 }
 
 /* inputs container */
@@ -89,9 +90,11 @@
   cursor: pointer;
 }
 
-/* User Name input */
+/* link forgot password */
 .login-container .login-card .login-card-left .forgotpswd {
   margin-top: 50px;
+  cursor: pointer;
+  user-select: none;
 }
 
 /*******************************************************************************************************************/
@@ -111,6 +114,7 @@
   margin-top: 50%;
   width: 80%;
   text-align: center;
+  user-select: none;
 }
 
 /* right side button */

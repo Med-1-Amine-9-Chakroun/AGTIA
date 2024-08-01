@@ -38,6 +38,7 @@ export default function SignIn() {
         </div>
         <div className="vertical-line"></div>
         <div className="signin-card-right">
+          <p>You already have an account.</p>
           <button>Login</button>
         </div>
       </div>

@@ -45,6 +45,7 @@
   font-weight: 400;
   font-size: 40px;
   margin: 20px 0;
+  user-select: none;
 }
 
 /* inputs container */
@@ -97,14 +98,20 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  /* justify-content: center; */
   align-items: center;
+}
+
+/* right side text */
+.signin-container .signin-card .signin-card-right p {
+  margin-top: 45%;
+  margin-bottom: 10px;
+  user-select: none;
 }
 
 /* right side button */
 .signin-container .signin-card .signin-card-right button {
   border: 1px solid --primary;
-  margin-top: 60%;
+
   font-size: 16px;
   border-radius: 50px;
   padding: 2px 30px;
