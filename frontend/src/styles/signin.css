@@ -1,0 +1,125 @@
+/* layout */
+:root {
+  --primary: #1c2434;
+  --secondary: #c0aeae;
+  --error: #e7195a;
+}
+
+/* signin container */
+.signin-container {
+  margin-top: 20px;
+  width: 100%;
+  height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* signin card */
+.signin-container .signin-card {
+  width: 80%;
+  max-width: 1000px;
+  height: 70%;
+  background-color: #f9f9f9;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 5px;
+  box-shadow: 2.5px 2.5px 5px 5px rgba(0, 0, 0, 0.05);
+}
+
+/*******************************************************************************************************************/
+/* Left side of signin card */
+.signin-container .signin-card .signin-card-left {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 5px;
+}
+
+/* Title */
+.signin-container .signin-card .signin-card-left h1 {
+  font-weight: 400;
+  font-size: 40px;
+  margin: 20px 0;
+  user-select: none;
+}
+
+/* inputs container */
+.signin-container .signin-card .signin-card-left .inputs {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+}
+
+/* inputs styles */
+.signin-container .signin-card .signin-card-left .inputs > * {
+  width: 80%;
+  height: 40px;
+  padding: 0 0 0 15px;
+  margin-top: 20px;
+  box-sizing: border-box;
+  border: 1px solid var(--primary);
+  background-color: transparent;
+  font-size: 18px;
+  border-radius: 50px;
+}
+
+/* inputs placeholder */
+.signin-container .signin-card .signin-card-left .inputs > *::placeholder {
+  color: #c0aeae;
+  font-weight: 300;
+}
+
+/* signin button */
+.signin-container .signin-card .signin-card-left .signinBtn {
+  background-color: var(--primary);
+  color: #e6e3e3;
+  width: 60%;
+  height: 40px;
+  margin-top: 50px;
+  border-radius: 60px;
+  font-size: 20px;
+  font-weight: 300;
+  cursor: pointer;
+}
+
+/*******************************************************************************************************************/
+/* Right side of signin card */
+.signin-container .signin-card .signin-card-right {
+  border-radius: 5px;
+  width: 50%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* right side text */
+.signin-container .signin-card .signin-card-right p {
+  margin-top: 45%;
+  margin-bottom: 10px;
+  user-select: none;
+}
+
+/* right side button */
+.signin-container .signin-card .signin-card-right button {
+  border: 1px solid --primary;
+
+  font-size: 16px;
+  border-radius: 50px;
+  padding: 2px 30px;
+  cursor: pointer;
+}
+
+/* Vertical line between left and right signin card containers*/
+.signin-container .signin-card .vertical-line {
+  border: 1px solid #e6e3e3;
+  height: 85%;
+}

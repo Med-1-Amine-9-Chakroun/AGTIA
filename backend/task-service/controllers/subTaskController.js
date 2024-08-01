@@ -111,7 +111,7 @@ const deleteSubTaskController = async (req, res) => {
 
 // test subTask controller
 const testSubTask = (req, res) => {
-  res.send("SubTask controller works");
+  res.send(req.user);
 };
 
 module.exports = {

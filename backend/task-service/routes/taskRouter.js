@@ -1,5 +1,5 @@
 const express = require("express");
-
+const requireAuth = require("../middleware/requireAuth");
 const {
   getTasksController,
   getTaskByIdController,
@@ -21,6 +21,9 @@ const {
 } = require("../controllers/subTaskController");
 
 const router = express.Router();
+
+// verify authentification
+router.use(requireAuth);
 
 //*********************************** *///*********************************** *///*********************************** */
 // Task
