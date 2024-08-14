@@ -1,0 +1,60 @@
+.card {
+  border-radius: 5px;
+  border: 1px solid #c7c1c1;
+  padding: 12px;
+  padding-right: 15px;
+  color: #000;
+  margin-bottom: 10px;
+  min-height: 120px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.card .date {
+  display: flex;
+  align-items: center;
+  color: #c7c1c1;
+}
+
+.card .taskDescription {
+  color: #1c2434;
+  font-weight: 500;
+  margin-left: 5px;
+}
+
+.card .toDoCounter {
+  margin-left: 5px;
+  color: #c7c1c1;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.card .title {
+}
+
+/* TO DO TITLE */
+.titleToDo {
+  border: 2px solid #1c2434;
+  border-radius: 20px;
+  padding: 2px 20px;
+  font-weight: 500;
+  color: #1c2434;
+}
+/* DOING TITLE */
+.titleDoing {
+  border: 2px solid #8faae0;
+  border-radius: 20px;
+  padding: 2px 20px;
+  font-weight: 500;
+  color: #8faae0;
+}
+/* DONE TITLE */
+.titleDone {
+  border: 2px solid #bcc7dc;
+  border-radius: 20px;
+  padding: 2px 20px;
+  font-weight: 500;
+  color: #bcc7dc;
+}

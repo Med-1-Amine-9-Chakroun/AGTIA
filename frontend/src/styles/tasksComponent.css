@@ -1,3 +1,4 @@
 .tasks-container {
   flex-grow: 1;
+  width: 80%;
 }

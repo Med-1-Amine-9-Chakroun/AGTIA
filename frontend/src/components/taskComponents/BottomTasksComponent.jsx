@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
 import ColumnComponent from "./toDoComponents/ColumnComponent";
+import "./toDoComponents/styles/board.css";
 
 export default function BottomTasksComponent() {
-  const [completed, setCompleted] = useState([]);
-  const [incomplete, setIncomplete] = useState([]);
-  const [backlog, setBacklog] = useState([]);
-  const [inReview, setInReview] = useState([]);
+  const [toDo, setToDo] = useState([]);
+  const [doing, setDoing] = useState([]);
+  const [done, setDone] = useState([]);
 
   useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/todos")
       .then((response) => response.json())
       .then((json) => {
-        setCompleted(json.filter((task) => task.completed));
-        setIncomplete(json.filter((task) => !task.completed));
+        setToDo(json.filter((task) => !task.completed));
+        setDone(json.filter((task) => task.completed));
       });
   }, []);
 
@@ -24,12 +24,7 @@ export default function BottomTasksComponent() {
 
     deletePreviousState(source.droppableId, draggableId);
 
-    const task = findItemById(draggableId, [
-      ...incomplete,
-      ...completed,
-      ...inReview,
-      ...backlog,
-    ]);
+    const task = findItemById(draggableId, [...toDo, ...doing, ...done]);
 
     setNewState(destination.droppableId, task);
   };
@@ -37,40 +32,35 @@ export default function BottomTasksComponent() {
   function deletePreviousState(sourceDroppableId, taskId) {
     switch (sourceDroppableId) {
       case "1":
-        setIncomplete(removeItemById(taskId, incomplete));
+        setToDo(removeItemById(taskId, toDo));
         break;
       case "2":
-        setCompleted(removeItemById(taskId, completed));
+        setDoing(removeItemById(taskId, doing));
         break;
       case "3":
-        setInReview(removeItemById(taskId, inReview));
-        break;
-      case "4":
-        setBacklog(removeItemById(taskId, backlog));
+        setDone(removeItemById(taskId, done));
         break;
     }
   }
+
   function setNewState(destinationDroppableId, task) {
     let updatedTask;
     switch (destinationDroppableId) {
       case "1": // TO DO
         updatedTask = { ...task, completed: false };
-        setIncomplete([updatedTask, ...incomplete]);
+        setToDo([updatedTask, ...toDo]);
         break;
-      case "2": // DONE
+      case "2": // DOING
+        updatedTask = { ...task, completed: false };
+        setDoing([updatedTask, ...doing]);
+        break;
+      case "3": // DONE
         updatedTask = { ...task, completed: true };
-        setCompleted([updatedTask, ...completed]);
-        break;
-      case "3": // IN REVIEW
-        updatedTask = { ...task, completed: false };
-        setInReview([updatedTask, ...inReview]);
-        break;
-      case "4": // BACKLOG
-        updatedTask = { ...task, completed: false };
-        setBacklog([updatedTask, ...backlog]);
+        setDone([updatedTask, ...done]);
         break;
     }
   }
+
   function findItemById(id, array) {
     return array.find((item) => item.id == id);
   }
@@ -81,22 +71,10 @@ export default function BottomTasksComponent() {
 
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
-      <h2 style={{ textAlign: "center" }}>PROGRESS BOARD</h2>
-
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          flexDirection: "row",
-          width: "1300px",
-          margin: "0 auto",
-        }}
-      >
-        <ColumnComponent title={"TO DO"} tasks={incomplete} id={"1"} />
-        <ColumnComponent title={"DONE"} tasks={completed} id={"2"} />
-        <ColumnComponent title={"IN REVIEW"} tasks={inReview} id={"3"} />
-        <ColumnComponent title={"BACKLOG"} tasks={backlog} id={"4"} />
+      <div className="BottomTasksComponent">
+        <ColumnComponent title={"TO DO"} tasks={toDo} id={"1"} />
+        <ColumnComponent title={"DOING"} tasks={doing} id={"2"} />
+        <ColumnComponent title={"DONE"} tasks={done} id={"3"} />
       </div>
     </DragDropContext>
   );

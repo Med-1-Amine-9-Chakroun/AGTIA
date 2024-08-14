@@ -2,45 +2,32 @@ import React from "react";
 import styled from "styled-components";
 import CardComponent from "./CardComponent";
 import "./styles/scroll.css";
+import "../toDoComponents/styles/column.css";
 import { Droppable } from "react-beautiful-dnd";
 
-const Container = styled.div`
-  background-color: #f4f5f7;
-  border-radius: 2.5px;
-  width: 400px;
-  height: 900px;
-  overflow-y: scroll;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-  border: 1px solid gray;
-`;
-
-const Title = styled.h3`
-  padding: 8px;
-  background-color: pink;
-  text-align: center;
-`;
-
 const TaskList = styled.div`
-  padding: 3px;
   transistion: background-color 0.2s ease;
-  background-color: #f4f5f7;
+
   flex-grow: 1;
   min-height: 100px;
 `;
 
 export default function ColumnComponent({ title, tasks, id }) {
+  const squareClass =
+    id === "1"
+      ? "squareToDo"
+      : id === "2"
+      ? "squareDoing"
+      : id === "3"
+      ? "squareDone"
+      : "square";
   return (
-    <Container className="column">
-      <Title
-        style={{
-          backgroundColor: "lightblue",
-          position: "sticky",
-          top: "0",
-        }}
-      >
-        {title}
-      </Title>
+    <div className="column">
+      <div className="columnHeader">
+        <div className={squareClass}></div>
+        {title} <div className="number">{tasks.length}</div>
+      </div>
+
       <Droppable droppableId={id}>
         {(provided, snapshot) => (
           <TaskList
@@ -49,12 +36,12 @@ export default function ColumnComponent({ title, tasks, id }) {
             isdraggingover={snapshot.isdraggingover}
           >
             {tasks.map((task, index) => (
-              <CardComponent key={index} index={index} task={task} />
+              <CardComponent key={index} index={index} task={task} id={id} />
             ))}
             {provided.placeholder}
           </TaskList>
         )}
       </Droppable>
-    </Container>
+    </div>
   );
 }
