@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import CardComponent from "./CardComponent";
 import "./styles/scroll.css";
