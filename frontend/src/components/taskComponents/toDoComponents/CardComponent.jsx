@@ -62,9 +62,10 @@ export default function CardComponent({ task, index, id }) {
           </div>
         )}
       </Draggable>
-      <TaskDetailsComponent open={open} onClose={() => setOpen(false)}>
-        <div>sdfsdf</div>
-      </TaskDetailsComponent>
+      <TaskDetailsComponent
+        open={open}
+        onClose={() => setOpen(false)}
+      ></TaskDetailsComponent>
     </div>
   );
 }

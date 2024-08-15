@@ -1,7 +1,8 @@
 import React from "react";
 import "./toDoComponents/styles/modal.css";
 import { X } from "react-feather";
-
+import "./toDoComponents/styles/taskDetails.css";
+import SubTasksComponent from "./SubTasksComponent";
 export default function TaskDetailsComponent({ open, onClose, children }) {
   return (
     // backdrop
@@ -11,47 +12,60 @@ export default function TaskDetailsComponent({ open, onClose, children }) {
     >
       {/* modal */}
       <div
+        style={{ width: "65%" }}
         onClick={(e) => e.stopPropagation()}
         className={`modal-content ${open ? "open" : ""}`}
       >
         <button onClick={onClose} className="close-button">
           <X />
         </button>
+        <h1>Task Details</h1>
         <div className="modal-container">
-          <h1>Task Details</h1>
           <div className="modal-container-left">
-            <input type="text" />
+            <input type="text" className="titleInput" />
             <textarea name="" id=""></textarea>
-            <span>To Do</span>
+            <span className="status">To Do</span>
             <label htmlFor="">
-              Start date:
-              <input type="text" />
+              <p>Start date:</p>
+
+              <input type="date" />
             </label>
             <label htmlFor="">
-              End date:
-              <input type="text" />
+              <p>End date:</p>
+
+              <input type="date" />
             </label>
             <label htmlFor="">
-              Start time:
-              <input type="text" />
+              <p>Start time:</p>
+
+              <input type="time" />
             </label>
             <label htmlFor="">
-              End time:
-              <input type="text" />
+              <p>End time:</p>
+
+              <input type="time" />
             </label>
             <hr />
-            <label htmlFor="">
-              Priority: <select name="" id=""></select>
-            </label>
-            <label htmlFor="">
-              Type:
-              <input type="text" />
-            </label>
-            <span>
-              <button>Delete</button> <button>Save</button>
+            <div className="bottom-data">
+              <label htmlFor="">
+                <p>Priority:</p>
+                <select name="" id=""></select>
+              </label>
+              <label htmlFor="">
+                <p>Type:</p>
+
+                <input type="text" />
+              </label>
+            </div>
+
+            <span className="buttons">
+              <button className="delete-btn">Delete</button>
+              <button className="save-btn">Save</button>
             </span>
           </div>
-          <div className="modal-container-right"></div>
+          <div className="modal-container-right">
+            <SubTasksComponent />
+          </div>
         </div>
       </div>
     </div>
