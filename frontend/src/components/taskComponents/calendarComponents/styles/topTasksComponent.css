@@ -1,0 +1,51 @@
+.top-calendar-container {
+  flex-grow: 1;
+}
+
+/* top devision */
+.top-calendar-container .top {
+  padding: 20px 50px;
+}
+
+/* title : All Tasks */
+.top-calendar-container .top h1 {
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+/* horizental line */
+.top-calendar-container .top hr {
+  border: 1px solid #cacaca7b;
+}
+
+/* the bottom of the top devivision that contains date and add btn */
+.top-calendar-container .top .top-bottom-content {
+  padding-top: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+/* date division */
+.top-calendar-container .top .date {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+/* button style */
+.top-calendar-container .top button {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #1c2434;
+  color: aliceblue;
+  font-size: 16px;
+  padding: 10px 15px 10px 13px;
+  border: none;
+  border-radius: 50px;
+}
+
+.top-calendar-container .top button span {
+  margin-right: 5px;
+}

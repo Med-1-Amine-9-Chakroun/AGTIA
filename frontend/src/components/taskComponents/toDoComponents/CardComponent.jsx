@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { Avatar } from "antd";
 import "./styles/card.css";
 
-import TaskDetailsComponent from "../TaskDetailsComponent";
+import TaskDetailsComponent from "./TaskDetailsComponent";
 
 export default function CardComponent({ task, index, id }) {
   const [open, setOpen] = useState(false);

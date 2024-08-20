@@ -1,4 +1,4 @@
-import "../../styles/tasksComponent.css";
+import "../../../styles/tasksComponent.css";
 import TopTasksComponent from "./TopTasksComponent";
 import BottomTasksComponent from "./BottomTasksComponent";
 

@@ -1,0 +1,71 @@
+/* Hide time slots */
+.fc-timegrid-slot {
+  display: none;
+}
+
+/* Hide time column in day and week views */
+.fc-timegrid-axis {
+  display: none;
+}
+
+/* Hide time-related labels */
+.fc-timegrid-slot-label {
+  display: none;
+}
+
+.calendar-component {
+  flex-grow: 1;
+}
+
+.container {
+  width: 92%;
+  margin: auto;
+  box-sizing: border-box;
+}
+
+/* Reduce the padding and margins inside the day cells */
+.fc-daygrid-day-number {
+  font-size: 0.9rem; /* Adjust font size as needed */
+  padding: 2px; /* Adjust padding as needed */
+}
+
+/* Reduce the font size of events */
+.fc-event {
+  font-size: 0.8rem; /* Adjust font size as needed */
+}
+
+/************************************************/
+/************************************************/
+/************************************************/
+/************************************************/
+
+/* Hide the month/year text between the navigation buttons */
+.fc-toolbar-title {
+  display: none;
+}
+
+.fc-col-header {
+  padding: 20px;
+  background-color: #3c50e0;
+  height: 50px;
+  color: aliceblue;
+}
+
+.fc-theme-standard th {
+  border: none;
+  font-weight: normal;
+  height: 50px;
+}
+
+.fc-scrollgrid .fc-scrollgrid-liquid {
+  border: none;
+}
+/* 
+.fc-theme-standard td,
+.fc-theme-standard th {
+  font-weight: normal;
+}
+
+.fc-theme-standard th {
+    font-weight: normal;
+  } */

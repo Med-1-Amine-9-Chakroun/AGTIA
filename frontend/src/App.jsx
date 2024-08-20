@@ -3,7 +3,7 @@ import NavBar from "./components/NavBar";
 import Login from "./pages/Login";
 import SignIn from "./pages/SignIn";
 
-import TasksComponent from "./components/taskComponents/TasksComponent";
+import TasksComponent from "./components/taskComponents/toDoComponents/TasksComponent";
 import Home from "./pages/Home";
 
 function App() {

@@ -1,7 +1,7 @@
 import React from "react";
-import "./toDoComponents/styles/modal.css";
+import "./styles/modal.css";
 import { X } from "react-feather";
-import "./toDoComponents/styles/taskDetails.css";
+import "./styles/taskDetails.css";
 import SubTasksComponent from "./SubTasksComponent";
 export default function TaskDetailsComponent({ open, onClose, children }) {
   return (

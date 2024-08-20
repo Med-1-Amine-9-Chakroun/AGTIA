@@ -1,14 +1,14 @@
-import "../../styles/topTasksComponent.css";
-export default function TopTasksComponent() {
+import "./styles/topTasksComponent.css";
+export default function TopCalendarComponent() {
   const today = new Date();
 
   const month = today.toLocaleString("en-US", { month: "long" });
   const day = today.getDate();
 
   return (
-    <div className="top-tasks-container">
+    <div className="top-calendar-container">
       <div className="top">
-        <h1>All Tasks</h1>
+        <h1>Calendar</h1>
         <hr />
         <div className="top-bottom-content">
           <div className="date">

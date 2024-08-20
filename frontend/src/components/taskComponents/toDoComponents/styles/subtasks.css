@@ -4,6 +4,7 @@
   border-radius: 50px;
   align-items: center;
   height: 35px;
+  margin-bottom: 20px;
 }
 
 .input-container input {
@@ -38,8 +39,11 @@
   margin-right: 5px;
 }
 
-/* .input-container .subtasks-list {
-} */
+.subtasks-list {
+  overflow-y: auto;
+  height: 60vh;
+  padding: 0 5px 0 3px;
+}
 
 .input-container .subtasks-list .subtask {
   border: 1px solid #bababb;
@@ -52,159 +56,107 @@
 /**** CHECK BOX STYLE
 /* ************************************** */
 /* ************************************** */
-
-.checkbox-wrapper-42 input[type="checkbox"] {
-  display: none;
-  visibility: hidden;
-}
-
-.checkbox-wrapper-42 label {
-  display: inline-block;
-}
-
-.checkbox-wrapper-42 .cbx {
-  position: relative;
-  top: 1px;
-  width: 17px;
-  height: 17px;
-  border: 1px solid #c8ccd4;
-  border-radius: 3px;
-  vertical-align: middle;
-  transition: background 0.1s ease;
+.checkbox-text-container.checked {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   cursor: pointer;
+  border: 1px solid #d6d5d5;
+  border-radius: 5px;
+  padding: 8px 10px;
+  margin-bottom: 10px;
+  background-color: #f4f4f4;
 }
-.checkbox-wrapper-42 .cbx:after {
+
+.checkbox-text-container.unchecked {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  border: 1px solid #d6d5d5;
+  border-radius: 5px;
+  padding: 8px 10px;
+  margin-bottom: 10px;
+}
+
+.hidden-checkbox {
+  display: none;
+}
+
+.custom-checkbox {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #b3b1b1;
+
+  border-radius: 3px;
+  display: inline-block;
+  margin-right: 10px;
+  position: relative;
+  background-color: white;
+  box-sizing: border-box;
+}
+
+.custom-checkbox::after {
   content: "";
   position: absolute;
-  top: 1px;
-  left: 5px;
+  top: 2px;
+  left: 6px;
   width: 5px;
-  height: 11px;
+  height: 9px;
+  border: solid transparent;
+  border-width: 0 3px 3px 0;
+  border-radius: 1px;
+  transform: rotate(45deg);
   opacity: 0;
-  transform: rotate(45deg) scale(0);
-  border-right: 2px solid #fff;
-  border-bottom: 2px solid #fff;
-  transition: all 0.3s ease;
-  transition-delay: 0.15s;
-}
-.checkbox-wrapper-42 .lbl {
-  margin-left: 5px;
-  vertical-align: middle;
-  cursor: pointer;
-}
-.checkbox-wrapper-42 input[type="checkbox"]:checked ~ .cbx {
-  border-color: transparent;
-  background: #6871f1;
-  animation: jelly-42 0.6s ease;
-}
-.checkbox-wrapper-42 input[type="checkbox"]:checked ~ .cbx:after {
-  opacity: 1;
-  transform: rotate(45deg) scale(1);
-}
-.checkbox-wrapper-42 .cntr {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  width: 100%;
-  text-align: center;
-}
-@-moz-keyframes jelly-42 {
-  from {
-    transform: scale(1, 1);
-  }
-  30% {
-    transform: scale(1.25, 0.75);
-  }
-  40% {
-    transform: scale(0.75, 1.25);
-  }
-  50% {
-    transform: scale(1.15, 0.85);
-  }
-  65% {
-    transform: scale(0.95, 1.05);
-  }
-  75% {
-    transform: scale(1.05, 0.95);
-  }
-  to {
-    transform: scale(1, 1);
-  }
-}
-@-webkit-keyframes jelly-42 {
-  from {
-    transform: scale(1, 1);
-  }
-  30% {
-    transform: scale(1.25, 0.75);
-  }
-  40% {
-    transform: scale(0.75, 1.25);
-  }
-  50% {
-    transform: scale(1.15, 0.85);
-  }
-  65% {
-    transform: scale(0.95, 1.05);
-  }
-  75% {
-    transform: scale(1.05, 0.95);
-  }
-  to {
-    transform: scale(1, 1);
-  }
-}
-@-o-keyframes jelly-42 {
-  from {
-    transform: scale(1, 1);
-  }
-  30% {
-    transform: scale(1.25, 0.75);
-  }
-  40% {
-    transform: scale(0.75, 1.25);
-  }
-  50% {
-    transform: scale(1.15, 0.85);
-  }
-  65% {
-    transform: scale(0.95, 1.05);
-  }
-  75% {
-    transform: scale(1.05, 0.95);
-  }
-  to {
-    transform: scale(1, 1);
-  }
-}
-@keyframes jelly-42 {
-  from {
-    transform: scale(1, 1);
-  }
-  30% {
-    transform: scale(1.25, 0.75);
-  }
-  40% {
-    transform: scale(0.75, 1.25);
-  }
-  50% {
-    transform: scale(1.15, 0.85);
-  }
-  65% {
-    transform: scale(0.95, 1.05);
-  }
-  75% {
-    transform: scale(1.05, 0.95);
-  }
-  to {
-    transform: scale(1, 1);
-  }
+  transition: opacity 0.2s;
 }
 
+.checkbox-text-container.checked .custom-checkbox {
+  background-color: #6161ff; /* Mauve */
+  border: none;
+  border-radius: 3px;
+}
+
+.checkbox-text-container.checked .custom-checkbox::after {
+  border-color: white;
+  opacity: 1;
+}
+
+.text {
+  font-size: 16px;
+  transition: color 0.2s;
+  user-select: none;
+}
+
+.checkbox-text-container.checked .text {
+  text-decoration: line-through;
+  color: #666;
+}
 /***************************************/
 /***************************************/
 /***************************************/
+/********     SCROLL BAR   *************/
 /***************************************/
 /***************************************/
 /***************************************/
-/***************************************/
+.subtasks-list::-webkit-scrollbar {
+  width: 8px;
+  cursor: pointer;
+}
+
+.subtasks-list::-webkit-scrollbar-track {
+  background: transparent;
+  cursor: pointer;
+}
+
+.subtasks-list::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.close-icon {
+  margin-left: auto;
+  padding-left: 10px;
+  display: flex;
+  align-items: center;
+}

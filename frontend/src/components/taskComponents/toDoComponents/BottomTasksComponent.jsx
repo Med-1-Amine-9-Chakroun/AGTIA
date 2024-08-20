@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
-import ColumnComponent from "./toDoComponents/ColumnComponent";
-import "./toDoComponents/styles/board.css";
+import ColumnComponent from "./ColumnComponent";
+import "./styles/board.css";
 
 export default function BottomTasksComponent() {
   const [toDo, setToDo] = useState([]);
