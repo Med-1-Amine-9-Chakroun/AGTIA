@@ -3,3 +3,9 @@
   width: 100%;
   flex-grow: 1;
 }
+
+.content-container {
+  flex-grow: 1;
+  flex-shrink: 0;
+  width: 80%;
+}

@@ -1,4 +1,5 @@
 import "../styles/VerticalNavBar.css";
+import { Link } from "react-router-dom";
 
 export default function VerticalNavBar() {
   return (
@@ -6,22 +7,22 @@ export default function VerticalNavBar() {
       <h2>MENU</h2>
       <ul>
         <li>
-          <a href="#">
+          <Link to="/dashboard">
             <span class="material-symbols-outlined">grid_view</span>
             <p>Dashboard</p>
-          </a>
+          </Link>
         </li>
         <li>
-          <a href="#">
+          <Link to="/calendar">
             <span class="material-symbols-outlined">calendar_today</span>
             <p>Calendar</p>
-          </a>
+          </Link>
         </li>
         <li>
-          <a href="#">
+          <Link to="/tasks">
             <span class="material-symbols-outlined">list</span>
             <p>All Tasks</p>
-          </a>
+          </Link>
         </li>
       </ul>
     </div>

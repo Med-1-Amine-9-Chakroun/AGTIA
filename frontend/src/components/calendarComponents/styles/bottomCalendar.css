@@ -57,15 +57,28 @@
   height: 50px;
 }
 
-.fc-scrollgrid .fc-scrollgrid-liquid {
-  border: none;
-}
-/* 
-.fc-theme-standard td,
-.fc-theme-standard th {
-  font-weight: normal;
+.fc-h-event {
+  margin-bottom: 5px;
+  margin-left: 10px;
 }
 
-.fc-theme-standard th {
-    font-weight: normal;
-  } */
+.fc-h-event .fc-event-title-container {
+  background-color: #eff4fb;
+  cursor: pointer;
+  color: rgb(44, 44, 44);
+  font-weight: 500;
+  font-size: 14px;
+  padding: 2px 3px 2px 5px;
+}
+
+.borderleftToDo {
+  border-left: 8px solid #1c2434;
+}
+
+.borderleftDoing {
+  border-left: 8px solid #8faae0;
+}
+
+.borderleftDone {
+  border-left: 8px solid #bcc7dc;
+}
