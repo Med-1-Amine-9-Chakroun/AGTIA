@@ -25,8 +25,8 @@
 
 /* Reduce the padding and margins inside the day cells */
 .fc-daygrid-day-number {
-  font-size: 0.9rem; /* Adjust font size as needed */
-  padding: 2px; /* Adjust padding as needed */
+  font-size: 0.8rem; /* Adjust font size as needed */
+  /* padding: 2px; Adjust padding as needed */
 }
 
 /* Reduce the font size of events */
@@ -45,16 +45,15 @@
 }
 
 .fc-col-header {
-  padding: 20px;
   background-color: #3c50e0;
-  height: 50px;
+  padding-top: 20px;
   color: aliceblue;
 }
 
 .fc-theme-standard th {
   border: none;
   font-weight: normal;
-  height: 50px;
+  height: 40px;
 }
 
 .fc-h-event {
@@ -81,4 +80,16 @@
 
 .borderleftDone {
   border-left: 8px solid #bcc7dc;
+}
+
+/************************************/
+/************************************/
+/************************************/
+/************************************/
+/* Reduce the size of toolbar buttons */
+.fc .fc-toolbar button {
+  padding: 4px 8px; /* Adjust padding for smaller buttons */
+  font-size: 16px; /* Smaller font size */
+  margin-top: -5px;
+  margin-bottom: -5px;
 }

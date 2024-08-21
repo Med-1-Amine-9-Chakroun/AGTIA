@@ -26,7 +26,7 @@ export default function BottomCalendarComponent() {
     {
       id: 505,
       title: "Repeating Event",
-      start: "2018-03-09",
+      start: "2018-03-29",
       className: "borderleftDoing",
     },
     {
@@ -45,20 +45,20 @@ export default function BottomCalendarComponent() {
     {
       id: 535,
       title: "Meeting",
-      start: "2018-03-12",
+      start: "2018-03-3",
       end: "2018-03-12",
       className: "borderleftDone",
     },
     {
       id: 545,
       title: "Lunch",
-      start: "2018-03-12",
+      start: "2018-03-21",
       className: "borderleftToDo",
     },
     {
       id: 555,
       title: "Meeting",
-      start: "2018-03-12",
+      start: "2018-03-22",
       className: "borderleftDone",
     },
     {
@@ -106,7 +106,7 @@ export default function BottomCalendarComponent() {
           editable={false}
           events={events}
           dayHeaderFormat={{ weekday: "long" }} // Use 'long' for full day names
-          contentHeight={600} // Adjust content height as needed
+          contentHeight={620} // Adjust content height as needed
           eventClick={handleEventClick} // Handle click on event
         />
       </div>
