@@ -1,0 +1,55 @@
+/* Backdrop styles */
+.modal-backdrop {
+  z-index: 1000;
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.3s;
+}
+
+.modal-backdrop.visible {
+  visibility: visible;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.modal-backdrop.invisible {
+  visibility: hidden;
+}
+
+/* Modal content styles */
+.modal-content {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 24px;
+  position: relative;
+  transition: transform 0.3s, opacity 0.3s;
+  transform: scale(1.25);
+  opacity: 0;
+}
+
+.modal-content.open {
+  transform: scale(1);
+  opacity: 1;
+}
+
+/* Close button styles */
+.close-button {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  padding: 4px;
+  border-radius: 8px;
+  background-color: white;
+  color: #a0a0a0;
+  transition: background-color 0.2s, color 0.2s;
+  border: none;
+  cursor: pointer;
+}
+
+.close-button:hover {
+  background-color: #f5f5f5;
+  color: #4a4a4a;
+}

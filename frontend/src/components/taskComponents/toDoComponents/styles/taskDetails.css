@@ -1,0 +1,152 @@
+.modal-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.modal-content {
+  padding: 30px 20px;
+  box-sizing: border-box;
+}
+
+h1 {
+  user-select: none;
+  font-weight: 550;
+  font-size: 25px;
+  margin-bottom: 10px;
+}
+
+.modal-container .modal-container-left {
+  width: 45%;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #e6e6e6;
+  border-radius: 5px;
+  padding: 15px;
+  box-sizing: border-box;
+}
+
+.modal-container .modal-container-left > * {
+  margin-bottom: 12px;
+}
+
+.modal-container .modal-container-left .titleInput {
+  border: 1px solid #1c2434;
+  border-radius: 5px;
+  height: 35px;
+  font-size: 20px;
+  font-weight: 550;
+  padding: 0 10px;
+}
+
+.modal-container .modal-container-left textarea {
+  border: 1px solid #1c2434;
+  border-radius: 5px;
+  height: 80px;
+  resize: none;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.modal-container .modal-container-left textarea::-webkit-scrollbar {
+  width: 8px;
+  cursor: pointer;
+}
+
+.modal-container .modal-container-left textarea::-webkit-scrollbar-track {
+  background: transparent;
+  cursor: pointer;
+}
+
+.modal-container .modal-container-left textarea::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.modal-container .modal-container-left .status {
+  background-color: #ed9e4332;
+  padding: 0px 20px;
+  width: fit-content;
+  user-select: none;
+  border: 1px solid #ed9e43;
+  border-radius: 50px;
+  color: #ed9e43;
+  font-weight: 600;
+}
+
+.modal-container .modal-container-left label {
+  font-weight: 600;
+  display: flex;
+  padding-left: 8px;
+}
+
+.modal-container .modal-container-left label p {
+  user-select: none;
+  width: 30%;
+  margin-right: 20px;
+}
+
+.modal-container .modal-container-left label input {
+  border-radius: 5px;
+  padding: 0 10px;
+  outline: none;
+  width: 40%;
+  height: 33px;
+  font-size: 18px;
+}
+
+.modal-container .modal-container-left hr {
+  border: 1px solid #e9e7e7;
+  height: 0px;
+  width: 95%;
+  margin-left: 2.5%;
+}
+
+.modal-container .modal-container-left .bottom-data > * {
+  margin-bottom: 15px;
+}
+
+.modal-container .modal-container-left .bottom-data input,
+select {
+  border-radius: 5px;
+  border: 2px solid #1c2434;
+  padding: 0 10px;
+  width: 60%;
+  height: 35px;
+  font-size: 18px;
+  box-sizing: border-box;
+}
+
+.modal-container .modal-container-left .buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 25px;
+}
+
+.modal-container .modal-container-left .delete-btn {
+  padding: 3px 20px;
+  border-radius: 50px;
+  background-color: #fff;
+  border: 3px solid #1c2434;
+  font-size: 18px;
+  font-weight: 600;
+  color: #1c2434;
+  float: right;
+}
+
+.modal-container .modal-container-left .save-btn {
+  padding: 3px 20px;
+  border-radius: 50px;
+  background-color: #1c2434;
+  border: 3px solid #1c2434;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600;
+  float: right;
+}
+
+.modal-container .modal-container-right {
+  width: 52%;
+}

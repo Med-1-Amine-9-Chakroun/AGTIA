@@ -1,0 +1,71 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+.column {
+  width: 31.5%;
+  height: 76vh;
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.column .columnHeader {
+  display: flex;
+  align-items: center;
+  height: 70px;
+  border: 1px solid #c7c1c1;
+  border-radius: 5px;
+  position: sticky;
+  margin-bottom: 15px;
+  top: 0;
+  z-index: 10;
+  background-color: #fff;
+}
+
+.column .columnHeader .square {
+  border-radius: 0px 5px 5px 0px;
+  background-color: #1c2434;
+  width: 13px;
+  height: 50px;
+  margin-right: 30px;
+}
+
+.column .columnHeader {
+  font-size: 20px;
+  font-family: "Inter", sans-serif;
+  font-weight: 450;
+}
+
+.column .columnHeader .number {
+  margin-left: 35px;
+  color: #a79e9e;
+  font-weight: normal;
+  font-size: 20px;
+  float: right;
+}
+/* TO DO STYLES */
+.squareToDo {
+  background-color: #1c2434;
+  border-radius: 0px 5px 5px 0px;
+  width: 13px;
+  height: 50px;
+  margin-right: 30px;
+}
+/* DOING STYLES */
+
+.squareDoing {
+  background-color: #8faae0;
+  border-radius: 0px 5px 5px 0px;
+  width: 13px;
+  height: 50px;
+  margin-right: 30px;
+}
+
+/* DONE STYLES */
+
+.squareDone {
+  background-color: #bcc7dc;
+  border-radius: 0px 5px 5px 0px;
+  width: 13px;
+  height: 50px;
+  margin-right: 30px;
+}

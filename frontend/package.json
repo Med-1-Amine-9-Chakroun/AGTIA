@@ -9,8 +9,24 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@canvasjs/react-charts": "^1.0.2",
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
+    "@fullcalendar/daygrid": "^6.1.15",
+    "@fullcalendar/interaction": "^6.1.15",
+    "@fullcalendar/list": "^6.1.15",
+    "@fullcalendar/react": "^6.1.15",
+    "@fullcalendar/timegrid": "^6.1.15",
+    "@mui/docs": "^5.16.7",
+    "@mui/icons-material": "^5.16.7",
+    "@mui/x-charts": "^7.13.0",
+    "ant": "^0.2.0",
+    "antd": "^5.20.1",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-beautiful-dnd": "^13.1.1",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.26.1",
+    "styled-components": "^6.1.12"
   },
   "devDependencies": {
     "@types/react": "^18.0.27",

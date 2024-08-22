@@ -1,0 +1,95 @@
+/* Hide time slots */
+.fc-timegrid-slot {
+  display: none;
+}
+
+/* Hide time column in day and week views */
+.fc-timegrid-axis {
+  display: none;
+}
+
+/* Hide time-related labels */
+.fc-timegrid-slot-label {
+  display: none;
+}
+
+.calendar-component {
+  flex-grow: 1;
+}
+
+.container {
+  width: 92%;
+  margin: auto;
+  box-sizing: border-box;
+}
+
+/* Reduce the padding and margins inside the day cells */
+.fc-daygrid-day-number {
+  font-size: 0.8rem; /* Adjust font size as needed */
+  /* padding: 2px; Adjust padding as needed */
+}
+
+/* Reduce the font size of events */
+.fc-event {
+  font-size: 0.8rem; /* Adjust font size as needed */
+}
+
+/************************************************/
+/************************************************/
+/************************************************/
+/************************************************/
+
+/* Hide the month/year text between the navigation buttons */
+.fc-toolbar-title {
+  display: none;
+}
+
+.fc-col-header {
+  background-color: #3c50e0;
+  padding-top: 20px;
+  color: aliceblue;
+}
+
+.fc-theme-standard th {
+  border: none;
+  font-weight: normal;
+  height: 40px;
+}
+
+.fc-h-event {
+  margin-bottom: 5px;
+  margin-left: 10px;
+}
+
+.fc-h-event .fc-event-title-container {
+  background-color: #eff4fb;
+  cursor: pointer;
+  color: rgb(44, 44, 44);
+  font-weight: 500;
+  font-size: 14px;
+  padding: 2px 3px 2px 5px;
+}
+
+.borderleftToDo {
+  border-left: 8px solid #1c2434;
+}
+
+.borderleftDoing {
+  border-left: 8px solid #8faae0;
+}
+
+.borderleftDone {
+  border-left: 8px solid #bcc7dc;
+}
+
+/************************************/
+/************************************/
+/************************************/
+/************************************/
+/* Reduce the size of toolbar buttons */
+.fc .fc-toolbar button {
+  padding: 4px 8px; /* Adjust padding for smaller buttons */
+  font-size: 16px; /* Smaller font size */
+  margin-top: -5px;
+  margin-bottom: -5px;
+}

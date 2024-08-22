@@ -1,0 +1,7 @@
+.line-chart {
+  width: 60%;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  padding: 30px;
+  box-sizing: border-box;
+}
