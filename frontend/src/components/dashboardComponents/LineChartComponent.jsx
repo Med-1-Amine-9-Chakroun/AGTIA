@@ -1,66 +1,80 @@
 import * as React from "react";
-import Stack from "@mui/material/Stack";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import IconButton from "@mui/material/IconButton";
-import UndoOutlinedIcon from "@mui/icons-material/UndoOutlined";
 import "./styles/linechart.css";
-import { LineChart } from "@mui/x-charts/LineChart";
 
-// import { HighlightedCode } from "@mui/docs/HighlightedCode";
+import CanvasJSReact from "@canvasjs/react-charts";
+//var CanvasJSReact = require('@canvasjs/react-charts');
 
-const lineChartsParams = {
-  series: [
-    {
-      color: "#7994EB", // Line color
-      areaColor: "rgba(154, 212, 241, 0.3)", // Area fill color
-      id: "series-1",
-      data: [3, 4, 1, 6, 5],
-      label: "A",
-      area: true,
-      stack: "total",
-      highlightScope: {
-        highlighted: "item",
-      },
-    },
-    {
-      color: "#9ED7F2", // Line color
-      areaColor: "rgba(154, 212, 241, 0.3)", // Area fill color
-      id: "series-2",
-      data: [4, 3, 1, 5, 8],
-      label: "B",
-      area: true,
-      stack: "total",
-      highlightScope: {
-        highlighted: "item",
-      },
-    },
-  ],
-  xAxis: [{ data: [0, 3, 6, 9, 12], scaleType: "linear", id: "axis1" }],
-  height: 400,
-};
+var CanvasJS = CanvasJSReact.CanvasJS;
+var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 export default function LineChartComponent() {
-  const [itemData, setItemData] = React.useState();
-  const [axisData, setAxisData] = React.useState();
-
+  const options = {
+    theme: "light2",
+    exportEnabled: true,
+    axisY: {
+      prefix: "",
+    },
+    toolTip: {
+      shared: true,
+    },
+    legend: {
+      verticalAlign: "top",
+      horizontalAlign: "left",
+      fontSize: 16,
+      fontWeight: "bold",
+    },
+    data: [
+      {
+        type: "area",
+        name: "GBP",
+        showInLegend: true,
+        xValueFormatString: "MMM YYYY",
+        yValueFormatString: "#,##0.##",
+        dataPoints: [
+          { x: new Date("2017-01-01"), y: 84.927 },
+          { x: new Date("2017-02-01"), y: 82.609 },
+          { x: new Date("2017-03-01"), y: 81.428 },
+          { x: new Date("2017-04-01"), y: 83.259 },
+          { x: new Date("2017-05-01"), y: 83.153 },
+          { x: new Date("2017-06-01"), y: 84.18 },
+          { x: new Date("2017-07-01"), y: 84.84 },
+          { x: new Date("2017-08-01"), y: 82.671 },
+          { x: new Date("2017-09-01"), y: 87.496 },
+          { x: new Date("2017-10-01"), y: 86.007 },
+          { x: new Date("2017-11-01"), y: 87.233 },
+          { x: new Date("2017-12-01"), y: 86.276 },
+        ],
+      },
+      {
+        type: "area",
+        name: "USD",
+        showInLegend: true,
+        xValueFormatString: "MMM YYYY",
+        yValueFormatString: "#,##0.##",
+        dataPoints: [
+          { x: new Date("2017- 01- 01"), y: 67.515 },
+          { x: new Date("2017- 02- 01"), y: 66.725 },
+          { x: new Date("2017- 03- 01"), y: 64.86 },
+          { x: new Date("2017- 04- 01"), y: 64.29 },
+          { x: new Date("2017- 05- 01"), y: 64.51 },
+          { x: new Date("2017- 06- 01"), y: 64.62 },
+          { x: new Date("2017- 07- 01"), y: 64.2 },
+          { x: new Date("2017- 08- 01"), y: 63.935 },
+          { x: new Date("2017- 09- 01"), y: 65.31 },
+          { x: new Date("2017- 10- 01"), y: 64.75 },
+          { x: new Date("2017- 11- 01"), y: 64.49 },
+          { x: new Date("2017- 12- 01"), y: 63.84 },
+        ],
+      },
+    ],
+  };
   return (
     <div className="line-chart">
-      <Stack
-        direction={{ xs: "column", md: "row" }}
-        spacing={{ xs: 0, md: 4 }}
-        sx={{ width: "100%" }}
-      >
-        <Box sx={{ flexGrow: 1 }}>
-          <LineChart
-            {...lineChartsParams}
-            onAreaClick={(event, d) => setItemData(d)}
-            onMarkClick={(event, d) => setItemData(d)}
-            onLineClick={(event, d) => setItemData(d)}
-            onAxisClick={(event, d) => setAxisData(d)}
-          />
-        </Box>
-      </Stack>
+      <CanvasJSChart
+        options={options}
+        /* onRef={ref => this.chart = ref} */
+      />
+      {/*You can get reference to the chart instance as shown above using onRef. This allows you to access all chart properties and methods*/}
     </div>
   );
 }

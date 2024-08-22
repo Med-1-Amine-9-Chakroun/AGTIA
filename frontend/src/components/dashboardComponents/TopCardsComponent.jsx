@@ -35,7 +35,6 @@ export default function TopCardsComponent() {
           <div className="bottom-card">50</div>
         </div>
       </div>
-      <ChartsComponent />
     </div>
   );
 }

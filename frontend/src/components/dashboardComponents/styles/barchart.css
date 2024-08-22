@@ -1,7 +1,6 @@
-.line-chart {
-  width: 60%;
+.bar-chart {
+  width: 35%;
   border-radius: 5px;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  padding: 30px;
-  box-sizing: border-box;
+  padding: 10px;
 }

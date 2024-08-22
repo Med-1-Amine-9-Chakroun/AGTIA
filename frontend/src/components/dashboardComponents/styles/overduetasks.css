@@ -1,0 +1,111 @@
+.overdue-tasks {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-radius: 5px;
+  padding: 20px 30px;
+  box-sizing: border-box;
+  width: 60%;
+}
+
+.overdue-tasks .title {
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.overdue-tasks .tasks {
+  overflow-y: scroll;
+  height: 40vh;
+  padding-right: 10px;
+}
+
+.overdue-tasks .tasks::-webkit-scrollbar {
+  width: 8px;
+  cursor: pointer;
+}
+
+.overdue-tasks .tasks::-webkit-scrollbar-track {
+  background: transparent;
+  cursor: pointer;
+}
+
+.overdue-tasks .tasks::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.overdue-tasks .tasks .t1 {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  padding: 10px 15px;
+  border: 2px solid #cecbcb;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.overdue-tasks .tasks .t1 .t1-left .t1-left-top {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 10px;
+}
+
+.overdue-tasks .tasks .t1 .t1-left {
+  flex-grow: 1;
+}
+
+.overdue-tasks .tasks .t1 .t1-left .t1-left-bottom {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding: 0 50px 0 0;
+}
+
+.overdue-tasks .tasks .t1 .t1-left .t1-left-bottom > * {
+  display: flex;
+  flex-direction: row;
+  color: #cecbcb;
+  font-size: 14px;
+  align-items: center;
+}
+
+.overdue-tasks .tasks .t1 .t1-left .t1-left-top .status {
+  background-color: #d74e445c;
+  border: 2px solid #d74d44;
+  border-radius: 50px;
+  padding: 0px 10px;
+  font-size: 14px;
+  color: #d74d44;
+  font-weight: 500;
+  margin-right: 40px;
+}
+
+.overdue-tasks .tasks .t1 .t1-left .t1-left-top span {
+  font-weight: 500;
+}
+
+.overdue-tasks .tasks .t1 .v-line {
+  width: 2px;
+  background-color: #cecbcb;
+  border-radius: 50px;
+}
+
+.overdue-tasks .tasks .t1 .t1-right {
+  display: flex;
+  flex-direction: column;
+  padding: 0px 50px 0 10px;
+}
+
+.overdue-tasks .tasks .t1 .t1-right span {
+  text-align: start;
+}
+
+.overdue-tasks .tasks .t1 .t1-right .title {
+  font-weight: 600;
+}
+
+.overdue-tasks .tasks .t1 .t1-right .value {
+  color: #cecbcb;
+  text-align: end;
+  padding: 10px 0 0 0;
+}
