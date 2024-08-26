@@ -22,35 +22,35 @@ export default function PieChartComponent() {
         bottom: 20,
       },
     },
-    subtitles: [
-      {
-        text: "Completed",
-        verticalAlign: "center",
-        fontSize: 14,
-        dockInsidePlotArea: true,
-        padding: {
-          bottom: 50,
-        },
-      },
-      {
-        text: "Pending",
-        verticalAlign: "center",
-        fontSize: 14,
-        dockInsidePlotArea: true,
-        padding: {
-          bottom: 0,
-        },
-      },
-      {
-        text: "Overdue",
-        verticalAlign: "center",
-        fontSize: 14,
-        dockInsidePlotArea: true,
-        padding: {
-          top: 50,
-        },
-      },
-    ],
+    // subtitles: [
+    //   {
+    //     text: "Completed",
+    //     verticalAlign: "center",
+    //     fontSize: 14,
+    //     dockInsidePlotArea: true,
+    //     padding: {
+    //       bottom: 50,
+    //     },
+    //   },
+    //   {
+    //     text: "Pending",
+    //     verticalAlign: "center",
+    //     fontSize: 14,
+    //     dockInsidePlotArea: true,
+    //     padding: {
+    //       bottom: 0,
+    //     },
+    //   },
+    //   {
+    //     text: "Overdue",
+    //     verticalAlign: "center",
+    //     fontSize: 14,
+    //     dockInsidePlotArea: true,
+    //     padding: {
+    //       top: 50,
+    //     },
+    //   },
+    // ],
     data: [
       {
         type: "doughnut",
