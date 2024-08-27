@@ -28,7 +28,7 @@ export default function NavBar() {
               <span className="material-symbols-outlined">notifications</span>
             </div>
             <div className="user-drop-down">
-              <span class="material-symbols-outlined">logout</span>
+              <span className="material-symbols-outlined">logout</span>
             </div>
           </div>
         </nav>

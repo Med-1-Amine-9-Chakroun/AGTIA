@@ -1,10 +1,11 @@
 require("dotenv").config();
 
+const cors = require("cors");
 const express = require("express");
 const { createProxyMiddleware } = require("http-proxy-middleware");
 
 const app = express();
-
+app.use(cors());
 // app.use(
 //   "/api/user/test",
 //   createProxyMiddleware({
@@ -14,8 +15,8 @@ const app = express();
 //     },
 //   })
 // );
-
-// app.use(express.json());
+// app.use(cors);
+app.use(express.json());
 
 app.use((req, res, next) => {
   console.log("API GateWay: " + req.path, req.headers);
