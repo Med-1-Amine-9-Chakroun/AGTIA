@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import "../styles/signin.css";
 export default function SignIn() {
   return (
@@ -39,7 +40,9 @@ export default function SignIn() {
         <div className="vertical-line"></div>
         <div className="signin-card-right">
           <p>You already have an account.</p>
-          <button>Login</button>
+          <Link to="/">
+            <button>Login</button>
+          </Link>
         </div>
       </div>
     </div>

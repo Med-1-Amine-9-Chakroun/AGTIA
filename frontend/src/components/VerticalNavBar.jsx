@@ -7,19 +7,19 @@ export default function VerticalNavBar() {
       <h2>MENU</h2>
       <ul>
         <li>
-          <Link to="/dashboard">
+          <Link to="/home/dashboard">
             <span class="material-symbols-outlined">grid_view</span>
             <p>Dashboard</p>
           </Link>
         </li>
         <li>
-          <Link to="/calendar">
+          <Link to="/home/calendar">
             <span class="material-symbols-outlined">calendar_today</span>
             <p>Calendar</p>
           </Link>
         </li>
         <li>
-          <Link to="/tasks">
+          <Link to="/home/tasks">
             <span class="material-symbols-outlined">list</span>
             <p>All Tasks</p>
           </Link>

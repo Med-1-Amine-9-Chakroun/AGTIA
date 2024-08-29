@@ -6,6 +6,7 @@ const cors = require("cors");
 const taskRouter = require("./routes/taskRouter");
 
 const app = express();
+app.use(cors());
 // Middleware to parse JSON bodies
 app.use(express.json());
 

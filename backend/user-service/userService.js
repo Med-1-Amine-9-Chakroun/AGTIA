@@ -8,13 +8,13 @@ const mongoose = require("mongoose");
 const app = express();
 
 // middleware
-// app.use(cors);
+app.use(cors());
 
 app.use(express.json());
-app.use((req, res, next) => {
-  console.log("User service: " + req.path, req.method);
-  next();
-});
+// app.use((req, res, next) => {
+//   console.log("User service: " + req.path, req.method);
+//   next();
+// });
 
 // routes
 app.use("/api/user", userRoutes);
