@@ -1,24 +1,22 @@
 import { useState } from "react";
 import "../styles/login.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 export default function Login() {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [login, setLogin] = useState(false);
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     alert(1);
-    const response = await fetch(
-      `http://localhost:3002/user/login?email=${encodeURIComponent(
-        name
-      )}&password=${encodeURIComponent(password)}`,
-      {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      }
-    );
+    // "proxy": "http://localhost:3002",
+    const response = await fetch("http://localhost:3002/user/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: name, password: password }),
+    });
 
     alert(2);
 
@@ -31,7 +29,7 @@ export default function Login() {
       localStorage.setItem("user", JSON.stringify(json));
 
       // update the auth context
-      navigate("/home");
+      navigate("/home/dashboard");
     }
   };
 
@@ -47,6 +45,7 @@ export default function Login() {
               placeholder="UserName"
               onChange={(e) => setName(e.target.value)}
             />
+
             <input
               className="passwordField"
               type="password"
@@ -54,7 +53,7 @@ export default function Login() {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-
+          {error && <div className="error">{error}</div>}
           <button className="loginBtn">Login</button>
           <span className="error"></span>
           <div className="forgotpswd">Forgot Password! Click here!</div>
@@ -66,8 +65,6 @@ export default function Login() {
             <button>Create Account</button>
           </Link>
         </div>
-
-        {error && <div className="error">{error}</div>}
       </div>
     </div>
   );
