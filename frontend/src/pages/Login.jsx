@@ -26,7 +26,6 @@ export default function Login() {
       // save the user to local storage
       localStorage.setItem("user", JSON.stringify(json));
       const user = JSON.parse(localStorage.getItem("user"));
-      console.log(user.user._id);
       dispatch(
         login({
           id: user.user._id,
