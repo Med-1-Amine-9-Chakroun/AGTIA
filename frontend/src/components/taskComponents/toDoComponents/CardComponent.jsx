@@ -3,14 +3,25 @@ import { Draggable } from "react-beautiful-dnd";
 import styled from "styled-components";
 import { Avatar } from "antd";
 import "./styles/card.css";
+import { format } from "date-fns";
 
 import TaskDetailsComponent from "./TaskDetailsComponent";
 
 export default function CardComponent({ task, index, id }) {
   const [open, setOpen] = useState(false);
+  const [idTask, setIdTask] = useState(null);
+
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    return format(date, "dd-MM-yyyy");
+  }
+
   const handleClick = (snapshot) => {
     if (!snapshot.isDragging) {
       setOpen(true);
+      setIdTask(task._id);
+      console.log(task._id);
+
       console.log("Card clicked, open state:", open);
     }
   };
@@ -24,14 +35,14 @@ export default function CardComponent({ task, index, id }) {
       : "card";
   return (
     <div>
-      <Draggable draggableId={`${task.id}`} key={task.id} index={index}>
+      <Draggable draggableId={`${task._id}`} key={task._id} index={index}>
         {(provided, snapshot) => (
           <div
             className="card"
             {...provided.draggableProps}
             {...provided.dragHandleProps}
             ref={provided.innerRef}
-            isDragging={snapshot.isDragging}
+            isDragging={snapshot.isDragging ? "true" : undefined}
             onClick={() => {
               handleClick(snapshot);
             }}
@@ -45,18 +56,18 @@ export default function CardComponent({ task, index, id }) {
             >
               <span className={titleClass}>
                 {/* <small>{task.id}</small> */}
-                Meeting
+                {task.type}
               </span>
               <div className="date">
-                <span class="material-symbols-outlined">schedule</span>
-                15/02/2024
+                <span className="material-symbols-outlined">schedule</span>
+                {formatDate(task.startDate)}
               </div>
             </div>
             <div style={{ display: "flex", justifyContent: "start" }}>
-              <div className="taskDescription">{task.title}</div>
+              <div className="taskDescription">{task.titreTask}</div>
             </div>
             <div className="toDoCounter">
-              To Do: <span className="number">5/10</span>
+              Subtasks: <span className="number">{task.subtasks.length}</span>
             </div>
             {provided.placeholder}
           </div>
@@ -65,6 +76,7 @@ export default function CardComponent({ task, index, id }) {
       <TaskDetailsComponent
         open={open}
         onClose={() => setOpen(false)}
+        taskId={idTask}
       ></TaskDetailsComponent>
     </div>
   );

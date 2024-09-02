@@ -23,7 +23,7 @@ const {
 const router = express.Router();
 
 // verify authentification
-router.use(requireAuth);
+// router.use(requireAuth);
 
 //*********************************** *///*********************************** *///*********************************** */
 // Task

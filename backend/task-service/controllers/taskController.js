@@ -11,7 +11,8 @@ const getTasksController = async (req, res) => {
   }
   // extracting alll tasks
   try {
-    const tasks = await Task.find({ categorie: "task", userId: userId });
+    console.log(userId);
+    const tasks = await Task.find({ categorie: "Task", userId: userId });
     // while not found
     if (!tasks) {
       res.status(400).json({ error: "No Tasks Found" });
@@ -182,7 +183,7 @@ const createTaskController = async (req, res) => {
 const editTaskController = async (req, res) => {
   // id task extraction
   const { idTask } = req.params;
-  console.log(req.body.titreTask);
+
   // idTask verification
   if (!mongoose.Types.ObjectId.isValid(idTask)) {
     res.status(404).json({ error: "No such task" });
@@ -203,7 +204,7 @@ const editTaskController = async (req, res) => {
     // while success
     res.status(200).json({ task });
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ error: error.message + "azerazer" });
   }
 };
 

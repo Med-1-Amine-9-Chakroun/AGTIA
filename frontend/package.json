@@ -2,7 +2,6 @@
   "name": "frontend",
   "private": true,
   "version": "0.0.0",
-  
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -24,6 +23,7 @@
     "@reduxjs/toolkit": "^2.2.7",
     "ant": "^0.2.0",
     "antd": "^5.20.1",
+    "date-fns": "^3.6.0",
     "react": "^18.2.0",
     "react-beautiful-dnd": "^13.1.1",
     "react-dom": "^18.2.0",

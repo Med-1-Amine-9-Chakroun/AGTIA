@@ -2,19 +2,83 @@ import React, { useState, useEffect } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
 import ColumnComponent from "./ColumnComponent";
 import "./styles/board.css";
+import { useSelector } from "react-redux";
 
 export default function BottomTasksComponent() {
   const [toDo, setToDo] = useState([]);
   const [doing, setDoing] = useState([]);
   const [done, setDone] = useState([]);
 
+  const state = useSelector((state) => state.user.value);
+
+  const updateTask = async (task, status) => {
+    try {
+      const storedUser = localStorage.getItem("user");
+      if (storedUser) {
+        const userObject = JSON.parse(storedUser);
+        const token = userObject.token;
+        task.statusTask = status;
+        const response = await fetch(
+          `http://localhost:3002/task/updateTask/${task._id}`,
+          {
+            method: "PUT",
+
+            headers: {
+              "Content-Type": "application/json", // Add this header
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(task),
+          }
+        );
+      }
+    } catch (error) {
+      console.error("An error occurred:", error);
+    }
+  };
+
+  const getTasks = async () => {
+    try {
+      const storedUser = localStorage.getItem("user");
+      if (storedUser) {
+        const userObject = JSON.parse(storedUser); // Parse the JSON string into an object
+
+        // Access the token from the parsed object
+        const userId = userObject.user._id;
+        const token = userObject.token;
+        const response = await fetch(
+          `http://localhost:3002/task/allTasks/${userId}`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        // Check if the response status is OK (200)
+        if (!response.ok) {
+          console.error("Error:", response.status, response.statusText);
+          const errorText = await response.text();
+          console.error("Response Text:", errorText);
+          throw new Error("Failed to fetch tasks.");
+        }
+
+        const data = await response.json();
+        console.log("Tasks Data:", data);
+        console.log("Tasks Data:", data.tasks[0].statusTask);
+        setToDo(data.tasks.filter((task) => task.statusTask === "To Do"));
+        setDone(data.tasks.filter((task) => task.statusTask === "Done"));
+        setDoing(data.tasks.filter((task) => task.statusTask === "Doing"));
+        console.log(toDo);
+        console.log(doing);
+        console.log(done);
+      }
+    } catch (error) {
+      console.error("An error occurred:", error);
+    }
+  };
   useEffect(() => {
-    fetch("https://jsonplaceholder.typicode.com/todos")
-      .then((response) => response.json())
-      .then((json) => {
-        setToDo(json.filter((task) => !task.completed));
-        setDone(json.filter((task) => task.completed));
-      });
+    getTasks();
   }, []);
 
   const handleDragEnd = (result) => {
@@ -33,6 +97,7 @@ export default function BottomTasksComponent() {
     switch (sourceDroppableId) {
       case "1":
         setToDo(removeItemById(taskId, toDo));
+
         break;
       case "2":
         setDoing(removeItemById(taskId, doing));
@@ -49,24 +114,29 @@ export default function BottomTasksComponent() {
       case "1": // TO DO
         updatedTask = { ...task, completed: false };
         setToDo([updatedTask, ...toDo]);
+        console.log(task._id);
+
+        updateTask(task, "To Do");
         break;
       case "2": // DOING
         updatedTask = { ...task, completed: false };
         setDoing([updatedTask, ...doing]);
+        updateTask(task, "Doing");
         break;
       case "3": // DONE
         updatedTask = { ...task, completed: true };
         setDone([updatedTask, ...done]);
+        updateTask(task, "Done");
         break;
     }
   }
 
   function findItemById(id, array) {
-    return array.find((item) => item.id == id);
+    return array.find((item) => item._id == id);
   }
 
   function removeItemById(id, array) {
-    return array.filter((item) => item.id != id);
+    return array.filter((item) => item._id != id);
   }
 
   return (

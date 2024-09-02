@@ -36,7 +36,7 @@ export default function Login() {
       );
 
       // update the auth context
-      navigate("/home/dashboard");
+      navigate("/home/tasks");
     }
   };
 

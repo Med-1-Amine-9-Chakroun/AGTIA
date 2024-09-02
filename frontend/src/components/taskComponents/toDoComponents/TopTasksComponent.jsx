@@ -15,7 +15,7 @@ export default function TopTasksComponent() {
             Today, {day} {month}
           </div>
           <button>
-            <span class="material-symbols-outlined">add_circle</span>
+            <span className="material-symbols-outlined">add_circle</span>
             <p>New</p>
           </button>
         </div>
