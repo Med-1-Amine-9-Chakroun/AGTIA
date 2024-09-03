@@ -72,6 +72,19 @@ export default function BottomTasksComponent() {
         console.log(toDo);
         console.log(doing);
         console.log(done);
+
+        const response1 = await fetch(
+          `http://localhost:3002/task/getSubTasks/${idTask}`,
+          {
+            method: "GET",
+
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        const dataSubTasks = await response1.json();
+        alert(dataSubTasks);
       }
     } catch (error) {
       console.error("An error occurred:", error);

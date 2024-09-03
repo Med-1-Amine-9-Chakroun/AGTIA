@@ -3,85 +3,16 @@ import "./styles/modal.css";
 import { X } from "react-feather";
 import "./styles/taskDetails.css";
 import SubTasksComponent from "./SubTasksComponent";
-export default function TaskDetailsComponent({ open, onClose, taskId }) {
+export default function TaskDetailsComponent({ open, onClose, task }) {
   const [subTasks, setSubTasks] = useState([]);
-  const [task, setTask] = useState([]);
+  // Initialize state with a default value
+  const [priority, setPriority] = useState(task.priority); // You can change 'Medium' to any default value
 
-  // const getSubtasks = async (idTask) => {
-  //   try {
-  //     const storedUser = localStorage.getItem("user");
-  //     if (storedUser) {
-  //       const userObject = JSON.parse(storedUser); // Parse the JSON string into an object
-
-  //       // Access the token from the parsed object
-
-  //       const token = userObject.token;
-  //       const response = await fetch(
-  //         `http://localhost:3002/task/getSubTasks/${idTask}`,
-  //         {
-  //           method: "GET",
-  //           headers: {
-  //             Authorization: `Bearer ${token}`,
-  //           },
-  //         }
-  //       );
-
-  //       // Check if the response status is OK (200)
-  //       if (!response.ok) {
-  //         console.error("Error:", response.status, response.statusText);
-  //         const errorText = await response.text();
-  //         console.error("Response Text:", errorText);
-  //         throw new Error("Failed to fetch tasks.");
-  //       }
-  //       const data = await response.json();
-  //       console.log(data);
-  //     }
-  //   } catch (error) {
-  //     console.error("An error occurred:", error);
-  //   }
-  // };
-  /***************************************************************** */
-  /***************************************************************** */
-  /***************************************************************** */
-  const getTasksData = async (taskId) => {
-    try {
-      const storedUser = localStorage.getItem("user");
-      if (storedUser) {
-        const userObject = JSON.parse(storedUser); // Parse the JSON string into an object
-        console.log(taskId);
-
-        const token = userObject.token;
-        const response = await fetch(
-          `http://localhost:3002/task/getTask/${taskId}`,
-          {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        console.log(444);
-        // Check if the response status is OK (200)
-        if (!response.ok) {
-          console.error("Error:", response.status, response.statusText);
-          const errorText = await response.text();
-          console.error("Response Text:", errorText);
-          throw new Error("Failed to fetch tasks.");
-        }
-        const taskData = await response.json();
-        console.log(taskData);
-        return taskData;
-      }
-    } catch (error) {
-      console.error("An error occurred:", error);
-    }
+  // Handle changes in the select dropdown
+  const handleChange = (event) => {
+    setPriority(event.target.value);
   };
   useEffect(() => {
-    console.log(222);
-
-    // getTasksData(taskId);
-    console.log(555);
-
     // getSubtasks(task._id);
   }, []);
   return (
@@ -102,39 +33,63 @@ export default function TaskDetailsComponent({ open, onClose, taskId }) {
         <h1>Task Details</h1>
         <div className="modal-container">
           <div className="modal-container-left">
-            <input type="text" className="titleInput" />
-            <textarea name="" id=""></textarea>
-            <span className="status">To Do</span>
+            <input type="text" className="titleInput" value={task.titreTask} />
+            <textarea name="" id="" value={task.descriptionTask}></textarea>
+            <span className="status">{task.statusTask}</span>
             <label htmlFor="">
               <p>Start date:</p>
 
-              <input type="date" />
+              <input
+                type="date"
+                value={new Date(task.startDate).toISOString().split("T")[0]}
+              />
             </label>
             <label htmlFor="">
               <p>End date:</p>
 
-              <input type="date" />
+              <input
+                type="date"
+                value={new Date(task.endDate).toISOString().split("T")[0]}
+              />
             </label>
             <label htmlFor="">
               <p>Start time:</p>
 
-              <input type="time" />
+              <input
+                type="time"
+                value={new Date(task.startTime)
+                  .toISOString()
+                  .split("T")[1]
+                  .slice(0, 5)}
+              />
             </label>
             <label htmlFor="">
               <p>End time:</p>
 
-              <input type="time" />
+              <input
+                type="time"
+                value={new Date(task.endTime)
+                  .toISOString()
+                  .split("T")[1]
+                  .slice(0, 5)}
+              />
             </label>
             <hr />
             <div className="bottom-data">
               <label htmlFor="">
                 <p>Priority:</p>
-                <select name="" id=""></select>
+                <select name="" id="" value={priority} onChange={handleChange}>
+                  <option value="Very Low">Very Low</option>
+                  <option value="Low">Low</option>
+                  <option value="Medium">Medium</option>
+                  <option value="High">High</option>
+                  <option value="Very High">Very High</option>
+                </select>
               </label>
               <label htmlFor="">
                 <p>Type:</p>
 
-                <input type="text" />
+                <input type="text" value={task.type} />
               </label>
             </div>
 
@@ -144,7 +99,7 @@ export default function TaskDetailsComponent({ open, onClose, taskId }) {
             </span>
           </div>
           <div className="modal-container-right">
-            <SubTasksComponent />
+            <SubTasksComponent idTask={task._id} />
           </div>
         </div>
       </div>

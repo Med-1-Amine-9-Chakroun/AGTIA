@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Draggable } from "react-beautiful-dnd";
 import styled from "styled-components";
 import { Avatar } from "antd";
@@ -9,7 +9,6 @@ import TaskDetailsComponent from "./TaskDetailsComponent";
 
 export default function CardComponent({ task, index, id }) {
   const [open, setOpen] = useState(false);
-  const [idTask, setIdTask] = useState(null);
 
   function formatDate(dateString) {
     const date = new Date(dateString);
@@ -19,8 +18,8 @@ export default function CardComponent({ task, index, id }) {
   const handleClick = (snapshot) => {
     if (!snapshot.isDragging) {
       setOpen(true);
-      setIdTask(task._id);
-      console.log(task._id);
+
+      console.log(task);
 
       console.log("Card clicked, open state:", open);
     }
@@ -76,7 +75,7 @@ export default function CardComponent({ task, index, id }) {
       <TaskDetailsComponent
         open={open}
         onClose={() => setOpen(false)}
-        taskId={idTask}
+        task={task}
       ></TaskDetailsComponent>
     </div>
   );
