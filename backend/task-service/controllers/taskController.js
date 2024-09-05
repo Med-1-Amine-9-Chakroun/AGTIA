@@ -133,7 +133,7 @@ const createTaskController = async (req, res) => {
     res.status(404).json({ error: "No such task" });
   }
   // initial categorie
-  const categorie = "task";
+  const categorie = "Task";
 
   // body attributes
   const {

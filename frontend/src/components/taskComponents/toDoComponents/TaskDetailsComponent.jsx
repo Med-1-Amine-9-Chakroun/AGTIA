@@ -3,9 +3,13 @@ import "./styles/modal.css";
 import { X } from "react-feather";
 import "./styles/taskDetails.css";
 import SubTasksComponent from "./SubTasksComponent";
+import { useDispatch } from "react-redux";
+import { clearSubTasks } from "../../../redux/features/subtasks";
 
 export default function TaskDetailsComponent({ open, onClose, task, state }) {
   // Initialize state with default values only if editing (state !== "add")
+  const dispatch = useDispatch();
+
   const [subTasks, setSubTasks] = useState([]);
   const [priority, setPriority] = useState(
     state === "add" ? "Medium" : task?.priority || "Medium"
@@ -41,6 +45,9 @@ export default function TaskDetailsComponent({ open, onClose, task, state }) {
   // Error state for form validation
   const [errors, setErrors] = useState(open === true ? "" : "");
   useEffect(() => {
+    if (state === "add") {
+      dispatch(clearSubTasks());
+    }
     setErrors("");
   }, [open]);
 
@@ -53,40 +60,63 @@ export default function TaskDetailsComponent({ open, onClose, task, state }) {
     else if (!startTime) setErrors("Start time is required");
     else if (!endTime) setErrors("End time is required");
     else if (!type) setErrors("Type is required");
+    else setErrors("");
   };
 
   // Handle saving the task
-  const handleClick = () => {
-    console.log(errors);
+  const handleClick = async () => {
+    console.log(state);
+    validateFields();
+    if (state === "add") {
+      if (errors === "") {
+        const storedUser = localStorage.getItem("user");
+        if (storedUser) {
+          const userObject = JSON.parse(storedUser);
+          const userId = userObject.user._id;
+          const token = userObject.token;
+          console.log(123);
 
-    if (validateFields()) {
-      if (state === "add") {
-        const newTask = {
-          categorie: "Task",
-          descriptionTask: description,
-          endDate: new Date(endDate).toISOString(),
-          endTime: new Date(`${endDate}T${endTime}`).toISOString(),
-          priority: priority,
-          startDate: new Date(startDate).toISOString(),
-          startTime: new Date(`${startDate}T${startTime}`).toISOString(),
-          statusTask: "To Do", // Default status for new tasks
-          subtasks: subTasks.map((subtask) => ({
-            titreTask: subtask.title,
-            statusTask: subtask.statusTask || "To Do",
-            categorie: "SubTask",
-            relatedTaskId: subtask.relatedTaskId || [],
-          })),
-          titreTask: title,
-          type: type,
-          userId: "669fb20dc184f1a36b841465", // Example userId
-        };
+          const newTask = {
+            categorie: "Task",
+            descriptionTask: description,
+            endDate: new Date(endDate).toISOString(),
+            endTime: new Date(`${endDate}T${endTime}`).toISOString(),
+            priority: priority,
+            startDate: new Date(startDate).toISOString(),
+            startTime: new Date(`${startDate}T${startTime}`).toISOString(),
+            statusTask: "To Do", // Default status for new tasks
 
-        console.log("New Task:", newTask);
-        // You can now send this task object to the backend
-      } else {
-        // Handle editing the task
-        console.log("Edit Task:", type);
+            titreTask: title,
+            type: type,
+          };
+          console.log(newTask);
+          const response = await fetch(
+            `http://localhost:3002/task/createTask/${userId}`,
+            {
+              method: "POST",
+              headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(newTask),
+            }
+          );
+
+          if (!response.ok) {
+            console.error("Error:", response.status, response.statusText);
+            const errorText = await response.text();
+            console.error("Response Text:", errorText);
+            throw new Error("Failed to fetch tasks.");
+          }
+          console.log(1234);
+          const data = await response.json();
+          console.log("New Task:", data);
+        }
       }
+      // You can now send this task object to the backend
+    } else {
+      // Handle editing the task
+      console.log("Edit Task:", type);
     }
   };
 

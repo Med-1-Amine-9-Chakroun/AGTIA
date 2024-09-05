@@ -36,7 +36,30 @@ export default function BottomTasksComponent() {
       return 0; // Return 0 if there's an error
     }
   };
+  const updateTask = async (task, status) => {
+    try {
+      const storedUser = localStorage.getItem("user");
+      if (storedUser) {
+        const userObject = JSON.parse(storedUser);
+        const token = userObject.token;
+        const updatedTask = { ...task, statusTask: status };
+        const response = await fetch(
+          `http://localhost:3002/task/updateTask/${task._id}`,
+          {
+            method: "PUT",
 
+            headers: {
+              "Content-Type": "application/json", // Add this header
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(updatedTask),
+          }
+        );
+      }
+    } catch (error) {
+      console.error("An error occurred:", error);
+    }
+  };
   const getTasks = async () => {
     try {
       const storedUser = localStorage.getItem("user");
@@ -134,9 +157,9 @@ export default function BottomTasksComponent() {
         updateTask(task, "Doing");
         break;
       case "3": // DONE
-        if (status === "toDo") {
+        if (status === "To Do") {
           dispatch(moveTask({ taskId: task._id, from: "toDo", to: "done" }));
-        } else if (status === "doing") {
+        } else if (status === "Doing") {
           dispatch(moveTask({ taskId: task._id, from: "doing", to: "done" }));
         }
 

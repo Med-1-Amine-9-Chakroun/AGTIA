@@ -1,8 +1,10 @@
 import { useState } from "react";
 import "../../../styles/topTasksComponent.css";
 import TaskDetailsComponent from "./TaskDetailsComponent";
+
 export default function TopTasksComponent() {
   const [open, setOpen] = useState(false);
+
   const today = new Date();
   const handleClick = () => {
     setOpen(true);

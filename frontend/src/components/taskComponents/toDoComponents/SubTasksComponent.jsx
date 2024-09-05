@@ -2,40 +2,50 @@ import React, { useEffect, useState } from "react";
 import "./styles/subtasks.css";
 import SubTaskDetailsComponent from "./SubTaskDetailsComponent";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { addSubTask } from "../../../redux/features/subtasks";
 
 export default function SubTasksComponent({ state }) {
   const selectedTask = useSelector((state) => state.tasks.selectedTask);
   const subtasksList = useSelector((state) => state.subTasks.SubTasks);
   // const selectedSubTask = useSelector((state) => state.tasks.selectedSubTask);
   const [subtasks, setSubTasks] = useState([]);
+  const dispatch = useDispatch();
+  const [titreTask, setTitreTask] = useState("");
 
+  // titreTask
+  // "Subtask 62"
+  // statusTask
+  // "To Do"
+  // categorie
+  // "SubTask"
+  // relatedTaskId
   useEffect(() => {
-    // console.log("Selected Task:", selectedTask);
-    // console.log("Selected SubTask:", selectedSubTask);
-
-    if (selectedTask.subtasks) {
-      if (state === "add") {
-        setSubTasks([]);
-      } else {
-        setSubTasks(selectedTask.subtasks);
-      }
-
-      // console.log(
-      //   "Setting Subtasks from Selected Task:",
-      //   selectedTask.subtasks
-      // );
-    }
-    // else if (selectedSubTask) {
-    //   setSubTasks(selectedSubTask);
-    //   console.log("Setting Subtasks from Selected SubTask:", selectedSubTask);
-    // }
-  }, [selectedTask]);
+    setTitreTask("");
+  }, [subtasksList]);
+  const handleClick = () => {
+    let subtask = {
+      titreTask: titreTask,
+      statusTask: "To Do",
+      categorie: "SubTask",
+    };
+    console.log(subtask);
+    setTitreTask("");
+    dispatch(addSubTask(subtask));
+  };
 
   return (
     <div>
       <div className="input-container">
-        <input type="text" placeholder="Add a new ToDo..." />
-        <button className="add-btn">
+        <input
+          type="text"
+          placeholder="Add a new ToDo..."
+          value={titreTask}
+          onChange={(e) => {
+            setTitreTask(e.target.value);
+          }}
+        />
+        <button className="add-btn" onClick={handleClick}>
           <span className="material-symbols-outlined">add_circle</span>
           <p> Add</p>
         </button>
