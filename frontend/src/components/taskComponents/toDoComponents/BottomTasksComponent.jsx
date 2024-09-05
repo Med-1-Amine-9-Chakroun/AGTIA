@@ -3,36 +3,37 @@ import { DragDropContext } from "react-beautiful-dnd";
 import ColumnComponent from "./ColumnComponent";
 import "./styles/board.css";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { setTasks, moveTask } from "../../../redux/features/tasks";
 
 export default function BottomTasksComponent() {
-  const [toDo, setToDo] = useState([]);
-  const [doing, setDoing] = useState([]);
-  const [done, setDone] = useState([]);
+  const dispatch = useDispatch();
+  const { toDo, doing, done } = useSelector((state) => state.tasks);
 
-  const state = useSelector((state) => state.user.value);
-
-  const updateTask = async (task, status) => {
+  const getSubTasks = async (taskId, token) => {
     try {
-      const storedUser = localStorage.getItem("user");
-      if (storedUser) {
-        const userObject = JSON.parse(storedUser);
-        const token = userObject.token;
-        task.statusTask = status;
-        const response = await fetch(
-          `http://localhost:3002/task/updateTask/${task._id}`,
-          {
-            method: "PUT",
+      const response = await fetch(
+        `http://localhost:3002/task/getSubTasks/${taskId}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
-            headers: {
-              "Content-Type": "application/json", // Add this header
-              Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify(task),
-          }
-        );
+      if (!response.ok) {
+        console.error("Error:", response.status, response.statusText);
+        const errorText = await response.text();
+        console.error("Response Text:", errorText);
+        throw new Error("Failed to fetch subtasks.");
       }
+
+      const data = await response.json();
+      return data.subtasks.length; // Return the number of subtasks
     } catch (error) {
       console.error("An error occurred:", error);
+      return 0; // Return 0 if there's an error
     }
   };
 
@@ -40,9 +41,7 @@ export default function BottomTasksComponent() {
     try {
       const storedUser = localStorage.getItem("user");
       if (storedUser) {
-        const userObject = JSON.parse(storedUser); // Parse the JSON string into an object
-
-        // Access the token from the parsed object
+        const userObject = JSON.parse(storedUser);
         const userId = userObject.user._id;
         const token = userObject.token;
         const response = await fetch(
@@ -55,7 +54,6 @@ export default function BottomTasksComponent() {
           }
         );
 
-        // Check if the response status is OK (200)
         if (!response.ok) {
           console.error("Error:", response.status, response.statusText);
           const errorText = await response.text();
@@ -64,32 +62,40 @@ export default function BottomTasksComponent() {
         }
 
         const data = await response.json();
-        console.log("Tasks Data:", data);
-        console.log("Tasks Data:", data.tasks[0].statusTask);
-        setToDo(data.tasks.filter((task) => task.statusTask === "To Do"));
-        setDone(data.tasks.filter((task) => task.statusTask === "Done"));
-        setDoing(data.tasks.filter((task) => task.statusTask === "Doing"));
-        console.log(toDo);
-        console.log(doing);
-        console.log(done);
 
-        const response1 = await fetch(
-          `http://localhost:3002/task/getSubTasks/${idTask}`,
-          {
-            method: "GET",
-
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
+        // Fetch subtask counts for all tasks concurrently
+        const tasksWithSubtaskCount = await Promise.all(
+          data.tasks.map(async (task) => {
+            const subtaskCount = await getSubTasks(task._id, token);
+            return {
+              ...task,
+              nbrSubTasks: subtaskCount, // Add the number of subtasks
+            };
+          })
         );
-        const dataSubTasks = await response1.json();
-        alert(dataSubTasks);
+
+        console.log(tasksWithSubtaskCount);
+
+        // Dispatch the updated tasks to the Redux store
+        dispatch(
+          setTasks({
+            toDo: tasksWithSubtaskCount.filter(
+              (task) => task.statusTask === "To Do"
+            ),
+            doing: tasksWithSubtaskCount.filter(
+              (task) => task.statusTask === "Doing"
+            ),
+            done: tasksWithSubtaskCount.filter(
+              (task) => task.statusTask === "Done"
+            ),
+          })
+        );
       }
     } catch (error) {
       console.error("An error occurred:", error);
     }
   };
+
   useEffect(() => {
     getTasks();
   }, []);
@@ -99,46 +105,41 @@ export default function BottomTasksComponent() {
 
     if (!destination || source.droppableId === destination.droppableId) return;
 
-    deletePreviousState(source.droppableId, draggableId);
+    // deletePreviousState(source.droppableId, draggableId);
 
     const task = findItemById(draggableId, [...toDo, ...doing, ...done]);
 
     setNewState(destination.droppableId, task);
   };
 
-  function deletePreviousState(sourceDroppableId, taskId) {
-    switch (sourceDroppableId) {
-      case "1":
-        setToDo(removeItemById(taskId, toDo));
-
-        break;
-      case "2":
-        setDoing(removeItemById(taskId, doing));
-        break;
-      case "3":
-        setDone(removeItemById(taskId, done));
-        break;
-    }
-  }
-
   function setNewState(destinationDroppableId, task) {
-    let updatedTask;
+    let status = task.statusTask;
     switch (destinationDroppableId) {
       case "1": // TO DO
-        updatedTask = { ...task, completed: false };
-        setToDo([updatedTask, ...toDo]);
-        console.log(task._id);
+        if (status === "Doing") {
+          dispatch(moveTask({ taskId: task._id, from: "doing", to: "toDo" }));
+        } else {
+          dispatch(moveTask({ taskId: task._id, from: "done", to: "toDo" }));
+        }
 
         updateTask(task, "To Do");
         break;
       case "2": // DOING
-        updatedTask = { ...task, completed: false };
-        setDoing([updatedTask, ...doing]);
+        if (status === "Done") {
+          dispatch(moveTask({ taskId: task._id, from: "done", to: "doing" }));
+        } else {
+          dispatch(moveTask({ taskId: task._id, from: "toDo", to: "doing" }));
+        }
+
         updateTask(task, "Doing");
         break;
       case "3": // DONE
-        updatedTask = { ...task, completed: true };
-        setDone([updatedTask, ...done]);
+        if (status === "toDo") {
+          dispatch(moveTask({ taskId: task._id, from: "toDo", to: "done" }));
+        } else if (status === "doing") {
+          dispatch(moveTask({ taskId: task._id, from: "doing", to: "done" }));
+        }
+
         updateTask(task, "Done");
         break;
     }
@@ -146,10 +147,6 @@ export default function BottomTasksComponent() {
 
   function findItemById(id, array) {
     return array.find((item) => item._id == id);
-  }
-
-  function removeItemById(id, array) {
-    return array.filter((item) => item._id != id);
   }
 
   return (

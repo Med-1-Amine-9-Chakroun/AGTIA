@@ -24,6 +24,29 @@ const getAllSubTasksController = async (req, res) => {
   }
 };
 
+// get all subTasks
+const getSubTaskController = async (req, res) => {
+  // extracting task id
+  const { idTask } = req.params;
+  // task id verification
+  if (!mongoose.Types.ObjectId.isValid(idTask)) {
+    res.status(404).json({ error: "No subTasks found" });
+  }
+
+  try {
+    // extracting subtasks using task id
+    const subtasks = await Task.findById({ _id: idTask });
+    // while not found
+    if (!subtasks) {
+      res.status(400).json({ error: "No subTasks found" });
+    }
+    // while success
+    res.status(200).json({ subtasks });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
 // create subTask
 const createSubTaskController = async (req, res) => {
   console.log("hello1");
@@ -120,4 +143,5 @@ module.exports = {
   editSubTaskController,
   deleteSubTaskController,
   testSubTask,
+  getSubTaskController,
 };

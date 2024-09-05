@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import "./styles/subtasks.css";
 import { X } from "react-feather";
-export default function SubTaskDetailsComponent() {
-  const [checked, setChecked] = useState(true);
+
+export default function SubTaskDetailsComponent({ subTask }) {
+  const [checked, setChecked] = useState(subTask.statusTask === "Done");
 
   const handleToggle = () => {
     setChecked(!checked);
@@ -10,7 +11,7 @@ export default function SubTaskDetailsComponent() {
 
   return (
     <div
-      className={`checkbox-text-container ${checked ? "unchecked" : "checked"}`}
+      className={`checkbox-text-container ${checked ? "checked" : "unchecked"}`}
       onClick={handleToggle}
     >
       <input
@@ -20,7 +21,7 @@ export default function SubTaskDetailsComponent() {
         className="hidden-checkbox"
       />
       <span className="custom-checkbox"></span>
-      <span className="text">Lorem ipsum dolor sit amet.</span>
+      <span className="text">{subTask.titreTask}</span>
       <span className="close-icon">
         <X />
       </span>

@@ -1,23 +1,35 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./styles/subtasks.css";
 import SubTaskDetailsComponent from "./SubTaskDetailsComponent";
-export default function SubTasksComponent({ idTask }) {
-  useEffect(() => {
-    getSubTasks(idTask);
-  }, []);
-  const getSubTasks = async (idTask) => {
-    try {
-      const storedUser = localStorage.getItem("user");
-      if (storedUser) {
-        console.log(idTask);
+import { useSelector } from "react-redux";
 
-        const userObject = JSON.parse(storedUser);
-        const token = userObject.token;
+export default function SubTasksComponent({ state }) {
+  const selectedTask = useSelector((state) => state.tasks.selectedTask);
+  const subtasksList = useSelector((state) => state.subTasks.SubTasks);
+  // const selectedSubTask = useSelector((state) => state.tasks.selectedSubTask);
+  const [subtasks, setSubTasks] = useState([]);
+
+  useEffect(() => {
+    // console.log("Selected Task:", selectedTask);
+    // console.log("Selected SubTask:", selectedSubTask);
+
+    if (selectedTask.subtasks) {
+      if (state === "add") {
+        setSubTasks([]);
+      } else {
+        setSubTasks(selectedTask.subtasks);
       }
-    } catch (error) {
-      console.error("An error occurred:", error);
+
+      // console.log(
+      //   "Setting Subtasks from Selected Task:",
+      //   selectedTask.subtasks
+      // );
     }
-  };
+    // else if (selectedSubTask) {
+    //   setSubTasks(selectedSubTask);
+    //   console.log("Setting Subtasks from Selected SubTask:", selectedSubTask);
+    // }
+  }, [selectedTask]);
 
   return (
     <div>
@@ -29,20 +41,13 @@ export default function SubTasksComponent({ idTask }) {
         </button>
       </div>
       <div className="subtasks-list">
-        <SubTaskDetailsComponent />
-        <SubTaskDetailsComponent />
-        <SubTaskDetailsComponent />
-        <SubTaskDetailsComponent />
-        <SubTaskDetailsComponent />
-        <SubTaskDetailsComponent />
-        <SubTaskDetailsComponent />
-        <SubTaskDetailsComponent />
-        <SubTaskDetailsComponent />
-        <SubTaskDetailsComponent />
-        <SubTaskDetailsComponent />
-        <SubTaskDetailsComponent />
-        <SubTaskDetailsComponent />
-        <SubTaskDetailsComponent />
+        {subtasksList.length > 0 ? (
+          subtasksList.map((subtask, index) => (
+            <SubTaskDetailsComponent key={index} subTask={subtask} />
+          ))
+        ) : (
+          <p>No subtasks added yet</p>
+        )}
       </div>
     </div>
   );

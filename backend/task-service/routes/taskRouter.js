@@ -17,6 +17,7 @@ const {
   createSubTaskController,
   editSubTaskController,
   deleteSubTaskController,
+  getSubTaskController,
   testSubTask,
 } = require("../controllers/subTaskController");
 
@@ -62,6 +63,9 @@ router.get("/test", testTask);
 
 // get all subTasks
 router.get("/getSubTasks/:idTask", getAllSubTasksController);
+
+// get  subTask
+router.get("/getSubTask/:idTask", getSubTaskController);
 
 // create subTask
 router.post("/createSubTask/:relatedTaskId", createSubTaskController);
