@@ -27,8 +27,7 @@ const tasksSlice = createSlice({
     },
     moveTask: (state, action) => {
       const { taskId, from, to } = action.payload;
-      console.log("****************************************");
-      console.log(state[from]);
+
       // Find the task in the `from` state array
       const task = state[from].find((task) => task._id === taskId);
       if (!task) return;
@@ -43,13 +42,12 @@ const tasksSlice = createSlice({
           task.statusTask = "Done";
           break;
       }
+
       // Remove the task from the `from` state array
       state[from] = state[from].filter((task) => task._id !== taskId);
 
       // Add the task to the `to` state array
       state[to].push(task);
-      console.log(state[to]);
-      console.log("****************************************");
     },
     addTask: (state, action) => {
       state.toDo.push(action.payload);

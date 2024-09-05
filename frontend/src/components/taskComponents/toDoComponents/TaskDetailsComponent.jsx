@@ -158,8 +158,90 @@ export default function TaskDetailsComponent({ open, onClose, task, state }) {
       }
       // You can now send this task object to the backend
     } else {
-      // Handle editing the task
-      console.log("Edit Task:", type);
+      if (errors === "") {
+        const updatedTask = { ...task }; // Create a copy of the original task
+
+        if (title !== (task?.titreTask || "")) {
+          updatedTask.titreTask = title;
+        }
+        if (description !== (task?.descriptionTask || "")) {
+          updatedTask.descriptionTask = description;
+        }
+        if (priority !== (task?.priority || "Medium")) {
+          updatedTask.priority = priority;
+        }
+        if (
+          startDate !==
+          (task?.startDate
+            ? new Date(task.startDate).toISOString().split("T")[0]
+            : "")
+        ) {
+          updatedTask.startDate = new Date(startDate).toISOString();
+        }
+        if (
+          endDate !==
+          (task?.endDate
+            ? new Date(task.endDate).toISOString().split("T")[0]
+            : "")
+        ) {
+          updatedTask.endDate = new Date(endDate).toISOString();
+        }
+        if (
+          startTime !==
+          (task?.startTime
+            ? new Date(task.startTime).toISOString().split("T")[1].slice(0, 5)
+            : "")
+        ) {
+          updatedTask.startTime = new Date(
+            `${startDate}T${startTime}`
+          ).toISOString();
+        }
+        if (
+          endTime !==
+          (task?.endTime
+            ? new Date(task.endTime).toISOString().split("T")[1].slice(0, 5)
+            : "")
+        ) {
+          updatedTask.endTime = new Date(`${endDate}T${endTime}`).toISOString();
+        }
+        if (type !== (task?.type || "")) {
+          updatedTask.type = type;
+        }
+        // Handle editing the task
+        console.log("Edit Task:", updatedTask);
+
+        // *********************************************************************
+        // *********************************************************************
+        const storedUser = localStorage.getItem("user");
+        if (storedUser) {
+          const userObject = JSON.parse(storedUser);
+          const userId = userObject.user._id;
+          const token = userObject.token;
+
+          const response = await fetch(
+            `http://localhost:3002/task/updateTask/${updatedTask._id}`,
+            {
+              method: "PUT",
+              headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(updatedTask),
+            }
+          );
+
+          if (!response.ok) {
+            console.error("Error:", response.status, response.statusText);
+            const errorText = await response.text();
+            console.error("Response Text:", errorText);
+            throw new Error("Failed to fetch tasks.");
+          }
+
+          const data = await response.json();
+        }
+        // *********************************************************************
+        // *********************************************************************
+      }
     }
   };
 

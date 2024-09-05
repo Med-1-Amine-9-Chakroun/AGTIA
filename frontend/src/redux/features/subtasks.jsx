@@ -20,8 +20,14 @@ const subTasksSlice = createSlice({
       state.SubTasks = [];
       console.log(state.SubTasks);
     },
+    removeSubTask: (state, action) => {
+      state.SubTasks = state.SubTasks.filter(
+        (subTask) => subTask._id !== action.payload
+      );
+    },
   },
 });
 
-export const { addSubTask, clearSubTasks, setSubTask } = subTasksSlice.actions;
+export const { addSubTask, clearSubTasks, setSubTask, removeSubTask } =
+  subTasksSlice.actions;
 export default subTasksSlice.reducer;

@@ -76,7 +76,7 @@ const createSubTaskController = async (req, res) => {
       categorie,
       relatedTaskId: relatedTaskId,
     });
-    res.status(200).json({ subtask });
+    res.status(200).json(subtask);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
