@@ -5,7 +5,7 @@ import "./styles/taskDetails.css";
 import SubTasksComponent from "./SubTasksComponent";
 import { useDispatch, useSelector } from "react-redux";
 import { clearSubTasks, setSubTask } from "../../../redux/features/subtasks";
-import { addTask, selectTask } from "../../../redux/features/tasks";
+import { addTask, selectTask, removeTask } from "../../../redux/features/tasks";
 
 export default function TaskDetailsComponent({ open, onClose, task, state }) {
   // Initialize state with default values only if editing (state !== "add")
@@ -49,9 +49,8 @@ export default function TaskDetailsComponent({ open, onClose, task, state }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (state === "add") {
-      dispatch(clearSubTasks());
-    }
+    dispatch(clearSubTasks());
+    dispatch(selectTask(task));
     setErrors("");
   }, [open]);
 
@@ -67,6 +66,59 @@ export default function TaskDetailsComponent({ open, onClose, task, state }) {
     else setErrors("");
   };
 
+  const handleClickDelete = async () => {
+    console.log(task._id);
+    const userConfirmed = confirm("Are you sure you want to delete this task?");
+    if (userConfirmed) {
+      const storedUser = localStorage.getItem("user");
+      if (storedUser) {
+        const userObject = JSON.parse(storedUser);
+        const token = userObject.token;
+
+        const response = await fetch(
+          `http://localhost:3002/task/deleteTask/${task._id}`,
+          {
+            method: "DELETE",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              // "Content-Type": "application/json",
+            },
+          }
+        );
+
+        if (!response.ok) {
+          console.error("Error:", response.status, response.statusText);
+          const errorText = await response.text();
+          console.error("Response Text:", errorText);
+          throw new Error("Failed to fetch tasks.");
+        }
+        dispatch(
+          removeTask({
+            taskId: task._id,
+            from:
+              task.statusTask === "To Do"
+                ? "toDo"
+                : task.statusTask === "Doing"
+                ? "doing"
+                : "done",
+          })
+        );
+        setSubTasks("");
+        setPriority("");
+        setTitle("");
+        setDescription("");
+        setStartDate("");
+        setEndDate("");
+        setStartTime("");
+        setEndTime("");
+        setType("");
+        setErrors("");
+        dispatch(clearSubTasks());
+        dispatch(selectTask({}));
+        const data = await response.json();
+      }
+    }
+  };
   // Handle saving the task
   const handleClick = async () => {
     console.log(state);
@@ -152,6 +204,7 @@ export default function TaskDetailsComponent({ open, onClose, task, state }) {
           subtaskResponses.push(...(await Promise.all(subtaskPromises)));
 
           console.log("All subtasks inserted:", subtaskResponses);
+
           dispatch(clearSubTasks());
           dispatch(setSubTask());
         }
@@ -250,10 +303,6 @@ export default function TaskDetailsComponent({ open, onClose, task, state }) {
     setPriority(event.target.value);
   };
 
-  // Fetch subtasks from SubTasksComponent (Assuming it provides an API for this)
-  const handleSubTasksChange = (newSubTasks) => {
-    setSubTasks(newSubTasks); // SubTasksComponent should call this to pass subtasks
-  };
   return (
     // backdrop
     <div
@@ -344,7 +393,9 @@ export default function TaskDetailsComponent({ open, onClose, task, state }) {
             </div>
             {errors && <p className="error-message">{errors}</p>}
             <span className="buttons">
-              <button className="delete-btn">Delete</button>
+              <button className="delete-btn" onClick={handleClickDelete}>
+                Delete
+              </button>
               <button className="save-btn" onClick={handleClick}>
                 Save
               </button>

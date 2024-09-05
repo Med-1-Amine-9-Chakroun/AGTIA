@@ -49,12 +49,22 @@ const tasksSlice = createSlice({
       // Add the task to the `to` state array
       state[to].push(task);
     },
+    removeTask: (state, action) => {
+      const { taskId, from } = action.payload;
+      state[from] = state[from].filter((task) => task._id !== taskId);
+    },
     addTask: (state, action) => {
       state.toDo.push(action.payload);
     },
   },
 });
 
-export const { selectTask, moveTask, setTasks, clearTasks, addTask } =
-  tasksSlice.actions;
+export const {
+  selectTask,
+  moveTask,
+  setTasks,
+  clearTasks,
+  addTask,
+  removeTask,
+} = tasksSlice.actions;
 export default tasksSlice.reducer;

@@ -1,5 +1,8 @@
 import "./styles/topTasksComponent.css";
+import TaskDetailsComponent from "../taskComponents/toDoComponents/TaskDetailsComponent";
+import { useState } from "react";
 export default function TopCalendarComponent() {
+  const [open, setOpen] = useState(false);
   const today = new Date();
 
   const month = today.toLocaleString("en-US", { month: "long" });
@@ -19,6 +22,12 @@ export default function TopCalendarComponent() {
             <p>New</p>
           </button>
         </div>
+        <TaskDetailsComponent
+          open={open}
+          onClose={() => setOpen(false)}
+          task={[]}
+          state="add"
+        ></TaskDetailsComponent>
       </div>
     </div>
   );
