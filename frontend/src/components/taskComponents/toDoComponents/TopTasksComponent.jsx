@@ -1,13 +1,15 @@
 import { useState } from "react";
 import "../../../styles/topTasksComponent.css";
 import TaskDetailsComponent from "./TaskDetailsComponent";
-
+import { useDispatch } from "react-redux";
+import { clearSubTasks } from "../../../redux/features/subtasks";
 export default function TopTasksComponent() {
   const [open, setOpen] = useState(false);
-
+  const dispatch = useDispatch();
   const today = new Date();
   const handleClick = () => {
     setOpen(true);
+    dispatch(clearSubTasks());
   };
   const month = today.toLocaleString("en-US", { month: "long" });
   const day = today.getDate();

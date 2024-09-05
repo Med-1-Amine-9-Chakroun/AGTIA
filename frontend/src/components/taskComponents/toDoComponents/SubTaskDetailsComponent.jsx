@@ -7,6 +7,7 @@ export default function SubTaskDetailsComponent({ subTask }) {
 
   const handleToggle = () => {
     setChecked(!checked);
+    console.log(subTask._id);
   };
 
   return (

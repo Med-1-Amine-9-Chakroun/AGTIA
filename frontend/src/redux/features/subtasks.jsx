@@ -18,6 +18,7 @@ const subTasksSlice = createSlice({
 
     clearSubTasks: (state) => {
       state.SubTasks = [];
+      console.log(state.SubTasks);
     },
   },
 });

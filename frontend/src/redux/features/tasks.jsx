@@ -51,9 +51,12 @@ const tasksSlice = createSlice({
       console.log(state[to]);
       console.log("****************************************");
     },
+    addTask: (state, action) => {
+      state.toDo.push(action.payload);
+    },
   },
 });
 
-export const { selectTask, moveTask, setTasks, clearTasks } =
+export const { selectTask, moveTask, setTasks, clearTasks, addTask } =
   tasksSlice.actions;
 export default tasksSlice.reducer;

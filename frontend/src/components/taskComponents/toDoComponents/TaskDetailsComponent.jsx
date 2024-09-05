@@ -3,12 +3,12 @@ import "./styles/modal.css";
 import { X } from "react-feather";
 import "./styles/taskDetails.css";
 import SubTasksComponent from "./SubTasksComponent";
-import { useDispatch } from "react-redux";
-import { clearSubTasks } from "../../../redux/features/subtasks";
+import { useDispatch, useSelector } from "react-redux";
+import { clearSubTasks, setSubTask } from "../../../redux/features/subtasks";
+import { addTask, selectTask } from "../../../redux/features/tasks";
 
 export default function TaskDetailsComponent({ open, onClose, task, state }) {
   // Initialize state with default values only if editing (state !== "add")
-  const dispatch = useDispatch();
 
   const [subTasks, setSubTasks] = useState([]);
   const [priority, setPriority] = useState(
@@ -44,6 +44,10 @@ export default function TaskDetailsComponent({ open, onClose, task, state }) {
 
   // Error state for form validation
   const [errors, setErrors] = useState(open === true ? "" : "");
+
+  const subtasksList = useSelector((state) => state.subTasks.SubTasks);
+  const dispatch = useDispatch();
+
   useEffect(() => {
     if (state === "add") {
       dispatch(clearSubTasks());
@@ -74,8 +78,6 @@ export default function TaskDetailsComponent({ open, onClose, task, state }) {
           const userObject = JSON.parse(storedUser);
           const userId = userObject.user._id;
           const token = userObject.token;
-          console.log(123);
-
           const newTask = {
             categorie: "Task",
             descriptionTask: description,
@@ -108,9 +110,50 @@ export default function TaskDetailsComponent({ open, onClose, task, state }) {
             console.error("Response Text:", errorText);
             throw new Error("Failed to fetch tasks.");
           }
-          console.log(1234);
+
           const data = await response.json();
+          dispatch(addTask(data));
+          dispatch(selectTask(data));
+          let idTask = data._id;
+          const subtaskResponses = [];
           console.log("New Task:", data);
+          /*/*   TO ADD SUBTASKS IN DATABASE AND GET THEIR ID*/
+
+          const subtaskPromises = subtasksList.map(async (subtask) => {
+            console.log("Processing subtask:", subtask);
+
+            const response = await fetch(
+              `http://localhost:3002/task/createSubTask/${idTask}`,
+              {
+                method: "POST",
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(subtask),
+              }
+            );
+
+            if (!response.ok) {
+              console.error("Error:", response.status, response.statusText);
+              const errorText = await response.text();
+              console.error("Response Text:", errorText);
+              throw new Error("Failed to insert subtask.");
+            }
+
+            const data = await response.json();
+            console.log("Inserted subtask:", data.subtask);
+
+            // Add the inserted subtask response to the list
+            return data.subtask;
+          });
+
+          // Wait for all subtask insertions to complete
+          subtaskResponses.push(...(await Promise.all(subtaskPromises)));
+
+          console.log("All subtasks inserted:", subtaskResponses);
+          dispatch(clearSubTasks());
+          dispatch(setSubTask());
         }
       }
       // You can now send this task object to the backend
@@ -227,7 +270,7 @@ export default function TaskDetailsComponent({ open, onClose, task, state }) {
           </div>
           <div className="modal-container-right">
             {/* SubTasksComponent should allow you to get subtasks */}
-            <SubTasksComponent onSubTasksChange={setSubTasks} />
+            <SubTasksComponent state_A_E={state} />
           </div>
         </div>
       </div>
