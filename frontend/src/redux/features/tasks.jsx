@@ -56,6 +56,34 @@ const tasksSlice = createSlice({
     addTask: (state, action) => {
       state.toDo.push(action.payload);
     },
+    updateTaskById: (state, action) => {
+      const { taskId, updatedTask } = action.payload;
+
+      // Helper function to update task in the array
+      const updateTaskInList = (list) => {
+        const index = list.findIndex((task) => task._id === taskId);
+        if (index !== -1) {
+          list[index] = { ...list[index], ...updatedTask };
+          return true;
+        }
+        return false;
+      };
+
+      // Update task in the lists
+      if (updateTaskInList(state.toDo)) {
+        state.selectedTask = {
+          ...state.toDo.find((task) => task._id === taskId),
+        };
+      } else if (updateTaskInList(state.doing)) {
+        state.selectedTask = {
+          ...state.doing.find((task) => task._id === taskId),
+        };
+      } else if (updateTaskInList(state.done)) {
+        state.selectedTask = {
+          ...state.done.find((task) => task._id === taskId),
+        };
+      }
+    },
   },
 });
 
@@ -66,5 +94,6 @@ export const {
   clearTasks,
   addTask,
   removeTask,
+  updateTaskById,
 } = tasksSlice.actions;
 export default tasksSlice.reducer;

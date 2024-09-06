@@ -16,9 +16,10 @@ import { useDispatch, useSelector } from "react-redux";
 export default function BottomCalendarComponent() {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
-  const toDoTasks = useSelector((state) => state.tasks.toDo);
-  const DoingTasks = useSelector((state) => state.tasks.doing);
-  const DoneTasks = useSelector((state) => state.tasks.done);
+  const [task1, setTask1] = useState([]);
+  let toDoTasks = useSelector((state) => state.tasks.toDo);
+  let DoingTasks = useSelector((state) => state.tasks.doing);
+  let DoneTasks = useSelector((state) => state.tasks.done);
   const selectedTask = useSelector((state) => state.tasks.selectedTask);
 
   const allTasks = [...toDoTasks, ...DoingTasks, ...DoneTasks];
@@ -76,7 +77,6 @@ export default function BottomCalendarComponent() {
         }
 
         const data = await response.json();
-        console.log(data);
 
         dispatch(setSubTask(data.subtasks));
       }
@@ -89,13 +89,12 @@ export default function BottomCalendarComponent() {
 
   const handleEventClick = (clickInfo) => {
     setOpen(true);
+    setTask1(allTasks.find((task) => task._id === clickInfo.event.id));
 
-    const task = allTasks.find((task) => task._id === clickInfo.event.id);
-
-    console.log(task._id);
-    dispatch(selectTask(task));
-    console.log(task);
-    getSubTasks(task);
+    console.log(task1);
+    getSubTasks(task1);
+    dispatch(selectTask(task1));
+    console.log(selectedTask);
   };
 
   return (
@@ -126,7 +125,7 @@ export default function BottomCalendarComponent() {
       <TaskDetailsComponent
         open={open}
         onClose={() => setOpen(false)}
-        task={selectedTask}
+        task={task1}
         state="edit"
       ></TaskDetailsComponent>
     </div>

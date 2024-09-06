@@ -5,65 +5,83 @@ import "./styles/taskDetails.css";
 import SubTasksComponent from "./SubTasksComponent";
 import { useDispatch, useSelector } from "react-redux";
 import { clearSubTasks, setSubTask } from "../../../redux/features/subtasks";
-import { addTask, selectTask, removeTask } from "../../../redux/features/tasks";
+import {
+  addTask,
+  selectTask,
+  removeTask,
+  updateTaskById,
+} from "../../../redux/features/tasks";
 
 export default function TaskDetailsComponent({ open, onClose, task, state }) {
-  // Initialize state with default values only if editing (state !== "add")
+  console.log(task);
 
+  // Initialize state with default values
   const [subTasks, setSubTasks] = useState([]);
-  const [priority, setPriority] = useState(
-    state === "add" ? "Medium" : task?.priority || "Medium"
-  );
-  const [title, setTitle] = useState(
-    state === "add" ? "" : task?.titreTask || ""
-  );
-  const [description, setDescription] = useState(
-    state === "add" ? "" : task?.descriptionTask || ""
-  );
-  const [startDate, setStartDate] = useState(
-    state !== "add" && task?.startDate
-      ? new Date(task.startDate).toISOString().split("T")[0]
-      : ""
-  );
-  const [endDate, setEndDate] = useState(
-    state !== "add" && task?.endDate
-      ? new Date(task.endDate).toISOString().split("T")[0]
-      : ""
-  );
-  const [startTime, setStartTime] = useState(
-    state !== "add" && task?.startTime
-      ? new Date(task.startTime).toISOString().split("T")[1].slice(0, 5)
-      : ""
-  );
-  const [endTime, setEndTime] = useState(
-    state !== "add" && task?.endTime
-      ? new Date(task.endTime).toISOString().split("T")[1].slice(0, 5)
-      : ""
-  );
-  const [type, setType] = useState(state !== "add" ? task?.type || "" : "");
+  const [priority, setPriority] = useState("Medium");
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [startTime, setStartTime] = useState("");
+  const [endTime, setEndTime] = useState("");
+  const [type, setType] = useState("");
 
   // Error state for form validation
-  const [errors, setErrors] = useState(open === true ? "" : "");
+  const [errors, setErrors] = useState("");
 
   const subtasksList = useSelector((state) => state.subTasks.SubTasks);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // dispatch(clearSubTasks());
-    dispatch(selectTask(task));
+    // Update state when task or state changes
+    if (state !== "add" && task) {
+      setPriority(task.priority || "Medium");
+      setTitle(task.titreTask || "");
+      setDescription(task.descriptionTask || "");
+      setStartDate(
+        task.startDate
+          ? new Date(task.startDate).toISOString().split("T")[0]
+          : ""
+      );
+      setEndDate(
+        task.endDate ? new Date(task.endDate).toISOString().split("T")[0] : ""
+      );
+      setStartTime(
+        task.startTime
+          ? new Date(task.startTime).toISOString().split("T")[1].slice(0, 5)
+          : ""
+      );
+      setEndTime(
+        task.endTime
+          ? new Date(task.endTime).toISOString().split("T")[1].slice(0, 5)
+          : ""
+      );
+      setType(task.type || "");
+    } else if (state === "add") {
+      // Reset fields for adding a new task
+      setPriority("Medium");
+      setTitle("");
+      setDescription("");
+      setStartDate("");
+      setEndDate("");
+      setStartTime("");
+      setEndTime("");
+      setType("");
+    }
     setErrors("");
-  }, [open]);
+  }, [task, state, open]);
 
   const validateFields = () => {
-    let newErrors = {};
+    let newErrors = "";
 
-    if (!title) setErrors("Title is required");
-    else if (!startDate) setErrors("Start date is required");
-    else if (!endDate) setErrors("End date is required");
-    else if (!startTime) setErrors("Start time is required");
-    else if (!endTime) setErrors("End time is required");
-    else if (!type) setErrors("Type is required");
-    else setErrors("");
+    if (!title) newErrors = "Title is required";
+    else if (!startDate) newErrors = "Start date is required";
+    else if (!endDate) newErrors = "End date is required";
+    else if (!startTime) newErrors = "Start time is required";
+    else if (!endTime) newErrors = "End time is required";
+    else if (!type) newErrors = "Type is required";
+
+    setErrors(newErrors);
   };
 
   const handleClickDelete = async () => {
@@ -81,7 +99,6 @@ export default function TaskDetailsComponent({ open, onClose, task, state }) {
             method: "DELETE",
             headers: {
               Authorization: `Bearer ${token}`,
-              // "Content-Type": "application/json",
             },
           }
         );
@@ -103,7 +120,7 @@ export default function TaskDetailsComponent({ open, onClose, task, state }) {
                 : "done",
           })
         );
-        setSubTasks("");
+        setSubTasks([]);
         setPriority("");
         setTitle("");
         setDescription("");
@@ -115,16 +132,14 @@ export default function TaskDetailsComponent({ open, onClose, task, state }) {
         setErrors("");
         dispatch(clearSubTasks());
         dispatch(selectTask({}));
-        const data = await response.json();
       }
     }
   };
-  // Handle saving the task
+
   const handleClick = async () => {
-    console.log(state);
     validateFields();
-    if (state === "add") {
-      if (errors === "") {
+    if (errors === "") {
+      if (state === "add") {
         const storedUser = localStorage.getItem("user");
         if (storedUser) {
           const userObject = JSON.parse(storedUser);
@@ -138,8 +153,7 @@ export default function TaskDetailsComponent({ open, onClose, task, state }) {
             priority: priority,
             startDate: new Date(startDate).toISOString(),
             startTime: new Date(`${startDate}T${startTime}`).toISOString(),
-            statusTask: "To Do", // Default status for new tasks
-
+            statusTask: "To Do",
             titreTask: title,
             type: type,
           };
@@ -165,15 +179,9 @@ export default function TaskDetailsComponent({ open, onClose, task, state }) {
 
           const data = await response.json();
           dispatch(addTask(data));
-          // dispatch(selectTask(data));
-          let idTask = data._id;
-          const subtaskResponses = [];
-          console.log("New Task:", data);
-          /*/*   TO ADD SUBTASKS IN DATABASE AND GET THEIR ID*/
 
+          const idTask = data._id;
           const subtaskPromises = subtasksList.map(async (subtask) => {
-            console.log("Processing subtask:", subtask);
-
             const response = await fetch(
               `http://localhost:3002/task/createSubTask/${idTask}`,
               {
@@ -194,28 +202,16 @@ export default function TaskDetailsComponent({ open, onClose, task, state }) {
             }
 
             const data = await response.json();
-            console.log("Inserted subtask:", data.subtask);
-
-            // Add the inserted subtask response to the list
-            console.log(data.subtask);
             return data.subtask;
           });
 
-          // Wait for all subtask insertions to complete
-          subtaskResponses.push(...(await Promise.all(subtaskPromises)));
-
+          const subtaskResponses = await Promise.all(subtaskPromises);
           console.log("All subtasks inserted:", subtaskResponses);
 
           dispatch(clearSubTasks());
-
-          // dispatch(setSubTask(subtaskResponses));
         }
-      }
-      // You can now send this task object to the backend
-    } else {
-      if (errors === "") {
-        const updatedTask = { ...task }; // Create a copy of the original task
-
+      } else {
+        const updatedTask = { ...task };
         if (title !== (task?.titreTask || "")) {
           updatedTask.titreTask = title;
         }
@@ -262,11 +258,8 @@ export default function TaskDetailsComponent({ open, onClose, task, state }) {
         if (type !== (task?.type || "")) {
           updatedTask.type = type;
         }
-        // Handle editing the task
         console.log("Edit Task:", updatedTask);
 
-        // *********************************************************************
-        // *********************************************************************
         const storedUser = localStorage.getItem("user");
         if (storedUser) {
           const userObject = JSON.parse(storedUser);
@@ -293,25 +286,25 @@ export default function TaskDetailsComponent({ open, onClose, task, state }) {
           }
 
           const data = await response.json();
+          console.log(data);
+
+          dispatch(
+            updateTaskById({ taskId: data.task._id, updatedTask: data.task })
+          );
         }
-        // *********************************************************************
-        // *********************************************************************
       }
     }
   };
 
-  // Handle changes in the select dropdown
   const handleChange = (event) => {
     setPriority(event.target.value);
   };
 
   return (
-    // backdrop
     <div
       onClick={onClose}
       className={`modal-backdrop ${open ? "visible" : "invisible"}`}
     >
-      {/* modal */}
       <div
         style={{ width: "65%" }}
         onClick={(e) => e.stopPropagation()}
@@ -404,7 +397,6 @@ export default function TaskDetailsComponent({ open, onClose, task, state }) {
             </span>
           </div>
           <div className="modal-container-right">
-            {/* SubTasksComponent should allow you to get subtasks */}
             <SubTasksComponent state_A_E={state} />
           </div>
         </div>
