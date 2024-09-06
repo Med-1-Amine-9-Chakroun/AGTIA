@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
@@ -6,83 +6,95 @@ import interactionPlugin from "@fullcalendar/interaction"; // for dateClick
 import listPlugin from "@fullcalendar/list";
 import "./styles/bottomCalendar.css";
 
+import { selectTask } from "../../redux/features/tasks";
+
+import { setSubTask } from "../../redux/features/subtasks";
+import TaskDetailsComponent from "../taskComponents/toDoComponents/TaskDetailsComponent";
+
+import { useDispatch, useSelector } from "react-redux";
+
 export default function BottomCalendarComponent() {
-  // we must get tasks and verifey the state to affect the class name of the border left
-  // we must only show to do and doing tasks and not show done tasks
-  const events = [
-    {
-      id: 552,
-      title: "All Day Event",
-      start: "2018-03-01",
-      className: "borderleftDoing",
-    },
-    {
-      id: 551,
-      title: "Long Event",
-      start: "2018-03-07",
-      end: "2018-03-10",
-      className: "borderleftToDo",
-    },
-    {
-      id: 505,
-      title: "Repeating Event",
-      start: "2018-03-29",
-      className: "borderleftDoing",
-    },
-    {
-      id: 515,
-      title: "Repeating Event",
-      start: "2018-03-16",
-      className: "borderleftToDo",
-    },
-    {
-      id: 525,
-      title: "Conference",
-      start: "2018-03-11",
-      end: "2018-03-13",
-      className: "borderleftDoing",
-    },
-    {
-      id: 535,
-      title: "Meeting",
-      start: "2018-03-3",
-      end: "2018-03-12",
-      className: "borderleftDone",
-    },
-    {
-      id: 545,
-      title: "Lunch",
-      start: "2018-03-21",
-      className: "borderleftToDo",
-    },
-    {
-      id: 555,
-      title: "Meeting",
-      start: "2018-03-22",
-      className: "borderleftDone",
-    },
-    {
-      id: 565,
-      title: "Happy Hour",
-      start: "2018-03-16",
-      className: "borderleftDoing",
-    },
-    {
-      id: 575,
-      title: "Dinner",
-      start: "2018-03-14",
-      className: "borderleftDone",
-    },
-    {
-      id: 585,
-      title: "Birthday Party",
-      start: "2018-03-12",
-      className: "borderleftDoing",
-    },
-  ];
+  const dispatch = useDispatch();
+  const [open, setOpen] = useState(false);
+  const [task1, setTask1] = useState([]);
+  let toDoTasks = useSelector((state) => state.tasks.toDo);
+  let DoingTasks = useSelector((state) => state.tasks.doing);
+  let DoneTasks = useSelector((state) => state.tasks.done);
+  const selectedTask = useSelector((state) => state.tasks.selectedTask);
+
+  const allTasks = [...toDoTasks, ...DoingTasks, ...DoneTasks];
+
+  const today = new Date();
+  const [day, setDay] = useState(today.toISOString().split("T")[0]);
+  const getStatusClass = (status) => {
+    switch (status) {
+      case "Doing":
+        return "borderleftDoing";
+      case "Done":
+        return "borderleftDone";
+      case "To Do":
+        return "borderleftToDo";
+      default:
+        return "";
+    }
+  };
+
+  const event = allTasks.map((task) => ({
+    id: task._id,
+    title: task.titreTask,
+    start: new Date(task.startDate).toISOString().split("T")[0],
+    end: new Date(task.endDate).toISOString().split("T")[0],
+    className: getStatusClass(task.statusTask), // Optional
+  }));
+
+  /********************************************** */
+  /********************************************** */
+  const getSubTasks = async (task) => {
+    try {
+      const storedUser = localStorage.getItem("user");
+      if (storedUser) {
+        const userObject = JSON.parse(storedUser); // Parse the JSON string into an object
+
+        const token = userObject.token;
+        console.log(task._id);
+
+        // Fetch subtasks concurrently using Promise.all
+        const response = await fetch(
+          `http://localhost:3002/task/getSubTasks/${task._id}`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        if (!response.ok) {
+          console.error("Error:", response.status, response.statusText);
+          const errorText = await response.text();
+          console.error("Response Text:", errorText);
+          throw new Error("Failed to fetch tasks.");
+        }
+
+        const data = await response.json();
+
+        dispatch(setSubTask(data.subtasks));
+      }
+    } catch (error) {
+      console.error("An error occurred:", error);
+    }
+  };
+  /********************************************** */
+  /********************************************** */
 
   const handleEventClick = (clickInfo) => {
-    alert(`Task ID: ${clickInfo.event.id}`);
+    setOpen(true);
+    setTask1(allTasks.find((task) => task._id === clickInfo.event.id));
+
+    console.log(task1);
+    getSubTasks(task1);
+    dispatch(selectTask(task1));
+    console.log(selectedTask);
   };
 
   return (
@@ -101,15 +113,21 @@ export default function BottomCalendarComponent() {
             center: "title",
             right: "dayGridMonth,timeGridWeek,timeGridDay,listWeek",
           }}
-          initialDate="2018-03-12"
-          navLinks={false} // can click day/week names to navigate views
+          initialDate={day}
+          navLinks={true} // can click day/week names to navigate views
           editable={false}
-          events={events}
+          events={event}
           dayHeaderFormat={{ weekday: "long" }} // Use 'long' for full day names
           contentHeight={620} // Adjust content height as needed
           eventClick={handleEventClick} // Handle click on event
         />
       </div>
+      <TaskDetailsComponent
+        open={open}
+        onClose={() => setOpen(false)}
+        task={task1}
+        state="edit"
+      ></TaskDetailsComponent>
     </div>
   );
 }

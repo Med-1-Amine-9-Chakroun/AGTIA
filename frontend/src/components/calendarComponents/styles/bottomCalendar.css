@@ -43,9 +43,9 @@
 /************************************************/
 
 /* Hide the month/year text between the navigation buttons */
-.fc-toolbar-title {
+/* .fc-toolbar-title {
   display: none;
-}
+} */
 
 .fc-col-header {
   background-color: #3c50e0;

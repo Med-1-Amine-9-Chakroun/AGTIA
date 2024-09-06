@@ -33,7 +33,7 @@
 }
 
 /* button style */
-.top-calendar-container .top button {
+.top-calendar-container .top .add-task {
   display: flex;
   flex-direction: row;
   justify-content: space-between;

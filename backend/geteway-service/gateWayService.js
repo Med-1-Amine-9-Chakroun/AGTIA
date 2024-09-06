@@ -33,10 +33,10 @@ app.use(
 app.use(
   "/task",
   createProxyMiddleware({
-    target: process.env.TASK_SERVICE + "api/task",
+    target: process.env.TASK_SERVICE + "/api/task",
     changeOrigin: true,
     pathRewrite: {
-      [`^/task`]: "/api/task",
+      "^/task": "/api/task",
     },
   })
 );

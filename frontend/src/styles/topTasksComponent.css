@@ -29,7 +29,7 @@
 }
 
 /* button style */
-.top-tasks-container .top button {
+.top-tasks-container .top .add-btn-draft {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
