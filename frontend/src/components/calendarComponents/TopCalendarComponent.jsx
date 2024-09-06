@@ -4,7 +4,9 @@ import { useState } from "react";
 export default function TopCalendarComponent() {
   const [open, setOpen] = useState(false);
   const today = new Date();
-
+  const handleClick = () => {
+    setOpen(true);
+  };
   const month = today.toLocaleString("en-US", { month: "long" });
   const day = today.getDate();
 
@@ -17,7 +19,7 @@ export default function TopCalendarComponent() {
           <div className="date">
             Today, {day} {month}
           </div>
-          <button>
+          <button onClick={handleClick} className="add-task">
             <span className="material-symbols-outlined">add_circle</span>
             <p>New</p>
           </button>

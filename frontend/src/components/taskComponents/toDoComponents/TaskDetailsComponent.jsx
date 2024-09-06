@@ -49,7 +49,7 @@ export default function TaskDetailsComponent({ open, onClose, task, state }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(clearSubTasks());
+    // dispatch(clearSubTasks());
     dispatch(selectTask(task));
     setErrors("");
   }, [open]);
@@ -165,7 +165,7 @@ export default function TaskDetailsComponent({ open, onClose, task, state }) {
 
           const data = await response.json();
           dispatch(addTask(data));
-          dispatch(selectTask(data));
+          // dispatch(selectTask(data));
           let idTask = data._id;
           const subtaskResponses = [];
           console.log("New Task:", data);
@@ -197,6 +197,7 @@ export default function TaskDetailsComponent({ open, onClose, task, state }) {
             console.log("Inserted subtask:", data.subtask);
 
             // Add the inserted subtask response to the list
+            console.log(data.subtask);
             return data.subtask;
           });
 
@@ -206,7 +207,8 @@ export default function TaskDetailsComponent({ open, onClose, task, state }) {
           console.log("All subtasks inserted:", subtaskResponses);
 
           dispatch(clearSubTasks());
-          dispatch(setSubTask());
+
+          // dispatch(setSubTask(subtaskResponses));
         }
       }
       // You can now send this task object to the backend

@@ -23,10 +23,7 @@ export default function SubTasksComponent({ state_A_E }) {
   // relatedTaskId
   useEffect(() => {
     setTitreTask("");
-    setSubTasks(subtasksList);
-    console.log("subtasks");
-    console.log(subtasks);
-    console.log("subtasks");
+    setSubTasks(subtasksList || []);
   }, [subtasksList]);
 
   const handleClick = async () => {
